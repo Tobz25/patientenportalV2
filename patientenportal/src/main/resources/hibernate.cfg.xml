@@ -38,6 +38,22 @@
       	<mapping class="patientenportal.model.WebSession"/>
       	<mapping class="patientenportal.model.Patient"/>
       	<mapping class="patientenportal.model.Relative"/>
+      	<mapping class="patientenportal.model.Doctor"/>
+      	<mapping class="patientenportal.model.PatientFile"/>
+      	<mapping class="patientenportal.model.CaseFile"/>
+      	<mapping class="patientenportal.model.VitalDate"/>
+      	<mapping class="patientenportal.model.Treatment"/>
+      	<mapping class="patientenportal.model.MedicationPrescription"/>
+      	<mapping class="patientenportal.model.Medication"/>
+      	<mapping class="patientenportal.model.MedicationIntake"/>
+      	<mapping class="patientenportal.model.MedicalDocument"/>
+      	
+      	
+      	
+      	
+      	
+      	
+      	
     </session-factory>
  
 </hibernate-configuration>
