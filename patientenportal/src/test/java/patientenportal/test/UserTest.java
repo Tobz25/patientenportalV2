@@ -45,18 +45,24 @@ public class UserTest extends JerseyTest {
 	
 	@Test
 	public void  testAccessMyResource() {
-		Response response = target("myresource").request().header("Content-type", MediaType.TEXT_PLAIN).get();
+		Response response = target("myresource").request().get();
+		//String x = String.valueOf(response);
 		String answer = response.readEntity(String.class);
-		System.out.println("Antwort:" + answer);
+		//System.out.println("Antwort:" + answer + " - " + x);
+		System.out.println("Status: " + response.getStatus());
+		//Erwartet: Status 404, da SecurityFilter blockt
+		
 		assertFalse(answer == "Got it!");
+		
 	}
 	
+	/*
 	@Test
 	public void testHibernateAccess() {
 		Response response = target("hibernate/access").request().get();
 		String answer = response.readEntity(String.class);
 		System.out.println("Antwort:" + answer);
 		assertNull(answer);
-	}
+	}*/
 
 }
