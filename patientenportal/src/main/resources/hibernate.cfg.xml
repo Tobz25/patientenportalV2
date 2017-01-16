@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/patientenportal</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password"></property>
+ 
+        <!-- Use the C3P0 connection pool. -->  
+        <property name="c3p0.min_size">3</property>  
+        <property name="c3p0.max_size">5</property>  
+        <property name="c3p0.timeout">1800</property>  
+ 
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+ 
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>  
+        <property name="cache.use_query_cache">false</property>  
+        <property name="cache.use_minimal_puts">false</property>  
+        <property name="max_fetch_depth">3</property>  
+  
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        
+ 
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+ 
+      	<mapping class="patientenportal.model.User"/>
+      	<mapping class="patientenportal.model.WebSession"/>
+      	<mapping class="patientenportal.model.Patient"/>
+      	<mapping class="patientenportal.model.Relative"/>
+    </session-factory>
+ 
+</hibernate-configuration>
