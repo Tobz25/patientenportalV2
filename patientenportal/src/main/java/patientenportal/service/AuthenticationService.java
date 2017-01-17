@@ -45,5 +45,22 @@ public class AuthenticationService {
 		}
 		return false;
 	}
+	
+	public User getUserByToken(String token){
+		
+		int userID = getUserIdByToken(token);
+		User user = getUserById(userID);  //eventuell in UserService
+		return user;
+					
+	}
+	
+	public int getUserIdByToken(String token) {
+		return 0;
 
+	}
+	public User getUserById(int userID) {
+		return new User();
+
+	}
+	 
 }
