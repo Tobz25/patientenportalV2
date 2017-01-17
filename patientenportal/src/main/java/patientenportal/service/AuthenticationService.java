@@ -46,21 +46,14 @@ public class AuthenticationService {
 		return false;
 	}
 	
-	public User getUserByToken(String token){
-		
-		int userID = getUserIdByToken(token);
-		User user = getUserById(userID);  //eventuell in UserService
-		return user;
-					
-	}
-	
-	public int getUserIdByToken(String token) {
-		return 0;
-
-	}
-	public User getUserById(int userID) {
-		return new User();
-
-	}
-	 
+	public User getUserByToken(String token) {
+		WebSessionDAOImpl wsdi = new WebSessionDAOImpl();
+		List<WebSession> sessions = wsdi.getAll();
+		for (WebSession ws : sessions) {
+			if (ws.getToken().equals(token)){
+				return ws.getUser();
+			}
+		}
+		return null;
+	}	 
 }
