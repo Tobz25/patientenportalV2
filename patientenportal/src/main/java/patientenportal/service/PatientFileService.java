@@ -3,6 +3,7 @@ package patientenportal.service;
 import java.util.List;
 
 import patientenportal.dao.PatientFileDAOImpl;
+import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.PatientFile;
 
 public class PatientFileService {
@@ -15,7 +16,7 @@ public class PatientFileService {
 				return pf;
 			}
 		}
-		return null;
+		throw new DataNotFoundException("No patient file found for id " + patientFileId);
 	}	
 
 }

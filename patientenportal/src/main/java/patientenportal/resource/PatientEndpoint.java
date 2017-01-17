@@ -1,5 +1,7 @@
 package patientenportal.resource;
 
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,6 +22,11 @@ public class PatientEndpoint {
 	SecurityContext securityContext;
 	PatientService patientService = new PatientService();
 	
+	
+	@GET 
+	List<Patient> getPatients(){
+		return patientService.getPatients();
+	}
 		
 	@GET
 	@Path("/{patientId}")
