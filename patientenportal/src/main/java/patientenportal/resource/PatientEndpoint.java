@@ -24,7 +24,7 @@ public class PatientEndpoint {
 	
 	
 	@GET 
-	List<Patient> getPatients(){
+	public List<Patient> getPatients(){
 		return patientService.getPatients();
 	}
 		

@@ -11,7 +11,11 @@ public class PatientService {
 	public List<Patient> getPatients(){
 		PatientDAOImpl pdi = new PatientDAOImpl();
 		List<Patient> patients = pdi.getAll();
-		return patients;
+		if(patients.size()>0){
+			return patients;
+		}
+		throw new DataNotFoundException("No patients found");
+
 	}
 	
 	public Patient getPatientById(long patientId){
