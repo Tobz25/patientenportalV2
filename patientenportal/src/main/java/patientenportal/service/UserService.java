@@ -30,5 +30,33 @@ public class UserService {
 		}
 		throw new DataNotFoundException("User with id " + userId + " not found");
 	}	
+	
+	//TODO: neu angelegten user zurückgeben (addEntity anpassen)
+	public User addUser(User user){
+		UserDAOImpl udi = new UserDAOImpl();
+		udi.addEntity(user);
+		return null;
+	}
+	
+	//TODO: neu angelegten user zurückgeben (addEntity anpassen)
+		public User updateUser(User user){
+			UserDAOImpl udi = new UserDAOImpl();
+			udi.updateEntity(user);
+			return user;	
+		}
+		
+		public void deleteUser(long userId){
+			
+			//TODO:Rollen (also Patient, Angehöriger, Arzt, löschen wenn zu diesem User existierend
+			
+			UserDAOImpl udi = new UserDAOImpl();
+			List<User> allUser = udi.getAll();
+			User user;
+			for (User u : allUser) {
+				if (u.getId() == userId){
+					udi.deleteEntity(u);
+				}
+			}
+		}
 
 }

@@ -5,9 +5,11 @@ import java.util.Set;
 
 import patientenportal.dao.CaseFileDAOImpl;
 import patientenportal.dao.TreatmentDAOImpl;
+import patientenportal.dao.WebSessionDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.CaseFile;
 import patientenportal.model.Treatment;
+import patientenportal.model.WebSession;
 
 public class TreatmentService {
 	
@@ -31,6 +33,14 @@ public class TreatmentService {
 			}
 		}
 		throw new DataNotFoundException("Treatment with id " + treatmentId + " not found");
-	}	
+	}
+	
+	//TODO: Return the added Object (change addEntity to return ID of the created Object)
+	public Treatment addTreatment(Treatment treatment){
+		TreatmentDAOImpl tdi = new TreatmentDAOImpl();
+		tdi.addEntity(treatment);
+		return null;
+	}
+	
 
 }

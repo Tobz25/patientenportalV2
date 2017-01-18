@@ -2,7 +2,9 @@ package patientenportal.resource;
 
 import java.util.Set;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,6 +25,25 @@ public class TreatmentEndpoint {
 	@GET
 	public Set<Treatment> getAllTreatments(@PathParam ("caseFileId") long caseFileId){
 		return treatmentService.getTreatments(caseFileId);
+	}
+	
+	@GET
+	@Path("/{treatmentId}")
+	public Treatment getTreatment(@PathParam("treatmentId") long treatmentId){
+		return treatmentService.getTreatmentById(treatmentId);
+	}
+	
+	
+	//TODO: Funktioniert halt noch nicht, treatmentService.addTreatment gibt null zurück
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Treatment addTreatment(Treatment treatment){
+		return treatmentService.addTreatment(treatment);
+	}
+	
+	@Path("/{treatmentId}/medicationPrescription")
+	public MedicationPrescriptionEndpoint getMedicationPrescription(){
+		return new MedicationPrescriptionEndpoint();
 	}
 
 }
