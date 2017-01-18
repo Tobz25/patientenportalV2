@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
 import patientenportal.helper.Secured;
+import patientenportal.model.CaseFile;
 import patientenportal.model.PatientFile;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
@@ -26,6 +27,11 @@ public class PatientFileEndpoint {
 	@Path("/{patientFileId}")
 	public PatientFile getPatientFile(@PathParam("patientFileId") long patientFileId){
 		return patientFileService.getPatientFileById(patientFileId);
+	}
+	
+	@Path("/{patientFileId}/caseFiles")
+	public CaseFile getCaseFileEndpoint(){
+		return new CaseFileEndpoint();
 	}
 
 }
