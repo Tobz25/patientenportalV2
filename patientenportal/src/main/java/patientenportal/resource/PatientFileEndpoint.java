@@ -8,11 +8,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import patientenportal.helper.Secured;
 import patientenportal.model.PatientFile;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
 
-
+@Secured
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class PatientFileEndpoint {
@@ -23,7 +24,7 @@ public class PatientFileEndpoint {
 	
 	@GET
 	@Path("/{patientFileId}")
-	public PatientFile getPatientFile(@PathParam("patientId") long patientId, @PathParam("patientFileId") long patientFileId){
+	public PatientFile getPatientFile(@PathParam("patientFileId") long patientFileId){
 		return patientFileService.getPatientFileById(patientFileId);
 	}
 

@@ -34,7 +34,6 @@ public class PatientEndpoint {
 		return patientService.getPatientById(patientId);
 	}
 	
-	@GET
 	@Path("/{patientId}/patientFile")
 	public PatientFileEndpoint getPatientFileEndpoint(){
 		return new PatientFileEndpoint();
