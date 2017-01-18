@@ -12,10 +12,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import patientenportal.helper.Secured;
 import patientenportal.model.Treatment;
 import patientenportal.service.TreatmentService;
 
-@Path("/")
+@Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class TreatmentEndpoint {
 	@Context

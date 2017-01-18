@@ -16,7 +16,6 @@ import patientenportal.model.MedicationPrescription;
 import patientenportal.service.MedicationPrescriptionService;
 
 @Secured
-@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class MedicationPrescriptionEndpoint {
 	@Context

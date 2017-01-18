@@ -15,7 +15,6 @@ import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
 
 @Secured
-@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class PatientFileEndpoint {
 	@Context

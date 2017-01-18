@@ -16,7 +16,6 @@ import patientenportal.service.CaseFileService;
 
 
 @Secured
-@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class CaseFileEndpoint {
 	@Context
@@ -27,12 +26,12 @@ public class CaseFileEndpoint {
 	public List<CaseFile> getCaseFiles(){
 		return CaseFileService.getCaseFiles();
 	}
-	/*	
+		
 	@GET
 	@Path("/{caseFileId}")
 	public CaseFile getCaseFile(@PathParam("caseFileId") long caseFileId) {
 		return CaseFileService.getCaseFileById(caseFileId);
-	}*/
+	}
 	
 	@Path("/{CaseFileId}/treatments")
 	public TreatmentEndpoint getTreatmentsEndpoint(){

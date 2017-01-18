@@ -21,7 +21,7 @@ public class CaseFileService {
 		throw new DataNotFoundException("No Case Files found");
 	}
 
-	/*
+	
 	public CaseFile getCaseFileById(long caseFileId) {
 		CaseFileDAOImpl cfdi = new CaseFileDAOImpl();
 		List<CaseFile> CaseFiles = cfdi.getAll();
@@ -31,5 +31,5 @@ public class CaseFileService {
 			}
 		}
 		throw new DataNotFoundException("No Case file found for id " + caseFileId);
-	}*/
+	}
 }

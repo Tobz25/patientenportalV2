@@ -25,7 +25,7 @@ public class DoctorEndpoint {
 	
 	
 	@GET 
-	List<Doctor> getDoctors(){
+	public List<Doctor> getDoctors(){
 		return docotrService.getDoctors();
 	}
 		
