@@ -30,7 +30,7 @@ public class PatientFileEndpoint {
 	}
 	
 	@Path("/{patientFileId}/caseFiles")
-	public CaseFile getCaseFileEndpoint(){
+	public CaseFileEndpoint getCaseFileEndpoint(){
 		return new CaseFileEndpoint();
 	}
 
