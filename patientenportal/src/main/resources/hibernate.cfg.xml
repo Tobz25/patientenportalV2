@@ -47,6 +47,8 @@
       	<mapping class="patientenportal.model.Medication"/>
       	<mapping class="patientenportal.model.MedicationIntake"/>
       	<mapping class="patientenportal.model.MedicalDocument"/>
+      	<mapping class="patientenportal.model.InstructionMaterial"/>
+      	
       	
       	
       	

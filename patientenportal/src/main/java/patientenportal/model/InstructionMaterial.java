@@ -16,59 +16,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @XmlRootElement
 @Entity
-public class MedicalDocument{
+/*Schulungsunterlagen --> kranheitsfallspezifisch*/
+public class InstructionMaterial{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
 	private Long Id;
 
-	@ManyToOne
-	private CaseFile caseFile;
-
-	@ManyToOne
-	private PatientFile patientFile;
+	@ManyToMany
+	@JoinTable
+	private Set<CaseFile> caseFiles;
 
 	@Column
 	private String description;
 	
-	@Column(name="startdatetime", columnDefinition="DATETIME")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date added;
-	
-	@ManyToOne
-	private Doctor doctorAdded;
-	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof MedicalDocument) && Id != null && Id.equals(((MedicalDocument) obj).getId());
+		return (obj == this) || (obj instanceof InstructionMaterial) && Id != null && Id.equals(((InstructionMaterial) obj).getId());
 	}
 
+	/*Id*/
+	
 	public long getId() {
 		return Id;
 	}
+	
+	/*Casefiles*/
 
-	public CaseFile getCaseFile() {
-		return this.caseFile;
+	public Set<CaseFile> getCaseFiles() {
+		return this.caseFiles;
 	}
 
-	public void setCaseFile(CaseFile caseFile) {
-		this.caseFile = caseFile;
+	public void setCaseFiles(Set<CaseFile> caseFiles) {
+		this.caseFiles = caseFiles;
 	}
 	
-	public PatientFile getPatientFile() {
-		return this.patientFile;
+	public void addCaseFile(CaseFile caseFile) {
+		caseFile.getInstructionMaterials().add(this);
+		this.caseFiles.add(caseFile);
 	}
-
-	public void setPatientFile(PatientFile patientFile) {
-		this.patientFile = patientFile;
-	}
-
+	
+	/*Description*/
+	
 	public String getDescription() {
 		return this.description;
 	}
@@ -76,21 +73,4 @@ public class MedicalDocument{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Date getDateTimeofAdded() {
-		return this.added;
-	}
-
-	public void setDateTimeOfAdded(Date datetime) {
-		this.added = datetime;
-	}
-	
-	public Doctor getDoctorAdded() {
-		return this.doctorAdded;
-	}
-	
-	public void setDoctorAdded(Doctor doctor) {
-		this.doctorAdded = doctor;
-	}
-	
 }

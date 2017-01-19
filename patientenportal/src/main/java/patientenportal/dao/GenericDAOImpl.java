@@ -12,6 +12,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.criteria.internal.CriteriaBuilderImpl;
 
 import patientenportal.hibernate.SessionUtil;
 
@@ -60,6 +62,17 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 		session.save(addEntityIntern(entity));
 		tx.commit();
 		session.close();
+	}
+	
+	public T addEntityAndReturn(T entity) {
+		Session session = SessionUtil.getSession();
+		Transaction tx = startTA(session);
+		long id = (long)session.save(addEntityIntern(entity));
+		tx.commit();
+		session.close();
+		
+		Criterion cr = Restrictions.eq("id", id);
+		return findByCriteria(cr).get(0);
 	}
 	
 	public void updateEntity(T entity) {

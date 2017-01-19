@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -37,7 +39,13 @@ public class User extends BaseClass {
 
 	@Column
 	private String password;
-
+	
+	@OneToMany
+	private Set<UserRole> userRoles;
+	
+	@OneToOne
+	private UserRole activeRole;
+	
 	public String toString() {
 		return "(" + Id + " "+ username +" " + salutation + " " + firstname + " " + 
 				lastname + "" + emailaddress +" " + password + ") ";
@@ -55,10 +63,13 @@ public class User extends BaseClass {
 	 * ::::::::::::::::::::::::::::::::::::::
 	 */
 
+	/*Id*/
+	
 	public long getId() {
 		return Id;
 	}
 
+	/*Username*/
 	
 	public String getUsername() {
 		return this.username;
@@ -68,6 +79,8 @@ public class User extends BaseClass {
 		this.username = username;
 	}
 
+	/*Password*/
+	
 	public String getPassword() {
 		return this.password;
 	}
@@ -76,6 +89,8 @@ public class User extends BaseClass {
 		this.password = password;
 	}
 
+	/*Firstname*/
+	
 	public String getFirstname() {
 		return this.firstname;
 	}
@@ -84,6 +99,8 @@ public class User extends BaseClass {
 		this.firstname = firstname;
 	}
 
+	/*Lastname*/
+	
 	public String getLastname() {
 		return this.lastname;
 	}
@@ -91,6 +108,8 @@ public class User extends BaseClass {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	/*Emailaddress*/
 
 	public String getEmailaddress() {
 		return this.emailaddress;
@@ -100,12 +119,39 @@ public class User extends BaseClass {
 		this.emailaddress = emailaddress;
 	}
 
+	/*Salutation*/
+	
 	public String getSalutation() {
 		return this.salutation;
 	}
 
 	public void setSalutation(String salutation) {
 		this.salutation = salutation;
+	}
+	
+	/*Useroles*/
+	
+	public Set<UserRole> getUserRoles() {
+		return this.userRoles;
+	}
+	
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	public void addUserRole(UserRole userRole) {
+		userRole.setUser(this);
+		this.userRoles.add(userRole);
+	}
+	
+	/*activeRole*/
+	
+	public UserRole getActiveUserRole() {
+		return this.activeRole;
+	}
+	
+	public void setActiveUserRole(UserRole activeRole) {
+		this.activeRole = activeRole;
 	}
 
 	public String getFullName() {

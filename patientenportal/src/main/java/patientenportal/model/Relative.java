@@ -1,6 +1,8 @@
 package patientenportal.model;
 
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,32 +13,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
+@AttributeOverrides({  
+    @AttributeOverride(name="id", column=@Column(name="id")),  
+    @AttributeOverride(name="user", column=@Column(name="user"))  
+})  
 public class Relative extends UserRole {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private Long Id;
-
-	@OneToOne
-	private User user;
-
-	@Override
-	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof Relative) && Id != null && Id.equals(((Relative) obj).getId());
-	}
-
-
-	public long getId() {
-		return Id;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 }

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -37,6 +39,9 @@ public class CaseFile {
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Set<MedicalDocument> medicalDocuments;
 	
+	@ManyToMany(mappedBy="caseFiles")
+	private Set<InstructionMaterial> instructionMaterials;
+	
 	@Column
 	private String diagnose;
 	
@@ -49,6 +54,8 @@ public class CaseFile {
 		return Id;
 	}
 
+	/*Patientfile*/
+	
 	public PatientFile getPatientCase() {
 		return this.patientFile;
 	}
@@ -56,6 +63,8 @@ public class CaseFile {
 	public void setPatientCase(PatientFile patientCase) {
 		this.patientFile = patientCase;
 	}
+	
+	/*VitalData*/
 	
 	public Set<VitalDate> getVitalData() {
 		return this.vitalData;
@@ -70,6 +79,8 @@ public class CaseFile {
 		this.vitalData.add(vitalDate);
 	}
 	
+	/*Treatment*/
+	
 	public Set<Treatment> getTreatments() {
 		return this.treatments;
 	}
@@ -83,6 +94,8 @@ public class CaseFile {
 		this.treatments.add(treatment);
 	}
 	
+	/*MedicalDocuments*/
+	
 	public Set<MedicalDocument> getMedicalDocuments() {
 		return this.medicalDocuments;
 	}
@@ -95,6 +108,23 @@ public class CaseFile {
 		medicalDocument.setCaseFile(this);
 		this.medicalDocuments.add(medicalDocument);
 	}
+	
+	/*InstructionMaterial*/
+	
+	public Set<InstructionMaterial> getInstructionMaterials() {
+		return this.instructionMaterials;
+	}
+	
+	public void setInstructionMaterial(Set<InstructionMaterial> instructionMaterials) {
+		this.instructionMaterials = instructionMaterials;
+	}
+	
+	public void addInstructionMaterial(InstructionMaterial instructionMaterial) {
+		instructionMaterial.getCaseFiles().add(this);
+		this.instructionMaterials.add(instructionMaterial);
+	}
+	
+	/*Diagnose*/
 	
 	public String getDiagnose() {
 		return this.diagnose;

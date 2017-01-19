@@ -13,6 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 
+import patientenportal.MyResource;
 import patientenportal.resource.AuthenticationEndpoint;
 
 
@@ -20,7 +21,7 @@ public class UserTest extends JerseyTest {
 
 	@Override
 	protected Application configure() {
-	    return new ResourceConfig(AuthenticationEndpoint.class);
+	    return new ResourceConfig(AuthenticationEndpoint.class, MyResource.class);
 	}
 	
 	

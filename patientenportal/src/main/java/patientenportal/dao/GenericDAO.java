@@ -17,6 +17,8 @@ public interface GenericDAO<T, ID extends Serializable> {
 	  
 	public void addEntity(T entity);
 	
+	public T addEntityAndReturn(T entity);
+	
 	public void updateEntity(T entity);
 	  
 	public void deleteEntity(T entity);  
