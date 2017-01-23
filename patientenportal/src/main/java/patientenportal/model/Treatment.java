@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -76,7 +77,8 @@ public class Treatment{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	@XmlTransient
 	public Set<MedicationPrescription> getPrescriptions() {
 		return this.prescriptions;
 	}
@@ -90,6 +92,7 @@ public class Treatment{
 		this.prescriptions.add(prescription);
 	}
 	
+	@XmlTransient
 	public Set<MedicationIntake> getMedicationIntakes() {
 		return this.medicationIntakes;
 	}

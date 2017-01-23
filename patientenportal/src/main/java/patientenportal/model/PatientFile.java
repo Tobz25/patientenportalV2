@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -49,10 +50,11 @@ public class PatientFile {
 		this.patient = patient;
 	}
 
+	@XmlTransient
 	public Set<CaseFile> getCaseFiles() {
 		return this.caseFiles;
 	}
-	
+
 	public void setCaseFiles(Set<CaseFile> caseFiles) {
 		this.caseFiles = caseFiles;
 	}
@@ -61,7 +63,7 @@ public class PatientFile {
 		caseFile.setPatientCase(this);
 		this.caseFiles.add(caseFile);
 	}
-	
+	@XmlTransient
 	public Set<MedicalDocument> getMedicalDocuments() {
 		return this.medicalDocuments;
 	}
