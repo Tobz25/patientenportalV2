@@ -9,6 +9,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
@@ -20,7 +21,7 @@ public class UserRole extends BaseClass {
 	@Column(nullable = false)
 	private Long Id;
 	
-	
+	@XmlTransient
 	@OneToOne
 	private User user;
 	

@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @XmlRootElement
@@ -131,6 +132,7 @@ public class User extends BaseClass {
 	
 	/*Useroles*/
 	
+	@XmlTransient
 	public Set<UserRole> getUserRoles() {
 		return this.userRoles;
 	}
@@ -146,6 +148,7 @@ public class User extends BaseClass {
 	
 	/*activeRole*/
 	
+	@XmlTransient
 	public UserRole getActiveUserRole() {
 		return this.activeRole;
 	}
