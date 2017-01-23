@@ -10,10 +10,10 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 
 import patientenportal.helper.Secured;
+import patientenportal.model.User;
 import patientenportal.service.AuthenticationService;
 
 @Secured
@@ -34,39 +34,14 @@ public class SecurityFilter implements ContainerRequestFilter{
 	        	// Extract the token from the HTTP Authorization header
 	        	String token = authorizationHeader.substring("Bearer".length()).trim();
 	        	if (validateToken(token) == true){
-	        		return;
+	        		
+	        		//Get the user by this token
+	    	        User user = authService.getUserByToken(token);
+	    	        requestContext.setSecurityContext(new MySecurityContext(user));
+	    	        return;
 	        	}
 	        }
-	        
-/*	        requestContext.setSecurityContext(new SecurityContext() {
 
-	            @Override
-	            public Principal getUserPrincipal() {
-
-	                return new Principal() {
-
-	                    @Override
-	                    public String getName() {
-	                        return username;
-	                    }
-	                };
-	            }
-
-	            @Override
-	            public boolean isUserInRole(String role) {
-	                return true;
-	            }
-
-	            @Override
-	            public boolean isSecure() {
-	                return false;
-	            }
-
-	            @Override
-	            public String getAuthenticationScheme() {
-	                return null;
-	            }
-	        });*/
 	        
 	        Response unauthorizedStatus = Response
 					.status(Response.Status.UNAUTHORIZED)

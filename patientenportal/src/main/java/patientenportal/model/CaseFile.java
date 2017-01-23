@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -64,8 +65,12 @@ public class CaseFile {
 		this.patientFile = patientCase;
 	}
 	
+<<<<<<< HEAD
 	/*VitalData*/
 	
+=======
+	@XmlTransient
+>>>>>>> 0a0a69dc8e0d0a4796adbc43e285d1a4120e550b
 	public Set<VitalDate> getVitalData() {
 		return this.vitalData;
 	}
@@ -79,8 +84,12 @@ public class CaseFile {
 		this.vitalData.add(vitalDate);
 	}
 	
+<<<<<<< HEAD
 	/*Treatment*/
 	
+=======
+	@XmlTransient
+>>>>>>> 0a0a69dc8e0d0a4796adbc43e285d1a4120e550b
 	public Set<Treatment> getTreatments() {
 		return this.treatments;
 	}
@@ -94,8 +103,12 @@ public class CaseFile {
 		this.treatments.add(treatment);
 	}
 	
+<<<<<<< HEAD
 	/*MedicalDocuments*/
 	
+=======
+	@XmlTransient
+>>>>>>> 0a0a69dc8e0d0a4796adbc43e285d1a4120e550b
 	public Set<MedicalDocument> getMedicalDocuments() {
 		return this.medicalDocuments;
 	}

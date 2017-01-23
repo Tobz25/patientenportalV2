@@ -4,6 +4,7 @@ import java.util.List;
 
 import patientenportal.dao.UserDAOImpl;
 import patientenportal.dao.WebSessionDAOImpl;
+import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.User;
 import patientenportal.model.WebSession;
 
@@ -34,7 +35,7 @@ public class AuthenticationService {
 				return u;
 			}
 		}
-		return null;
+		throw new DataNotFoundException("User " + username + " not found");
 	}
 	
 	public boolean authenticateToken(String token){
@@ -45,5 +46,15 @@ public class AuthenticationService {
 		}
 		return false;
 	}
-
+	
+	public User getUserByToken(String token) {
+		WebSessionDAOImpl wsdi = new WebSessionDAOImpl();
+		List<WebSession> sessions = wsdi.getAll();
+		for (WebSession ws : sessions) {
+			if (ws.getToken().equals(token)){
+				return ws.getUser();
+			}
+		}
+		throw new DataNotFoundException("No user found for token " + token);
+	}	 
 }
