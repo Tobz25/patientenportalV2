@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.CascadeType;
 
@@ -22,6 +23,18 @@ import javax.persistence.Id;
 })  
 public class Patient extends UserRole {
 	
+
 	@OneToOne(mappedBy = "patient")
-	private PatientFile patientCase;
+	private PatientFile patientFile;
+	
+	@XmlTransient
+	public PatientFile getPatientFile() {
+		return this.patientFile;
+	}
+	
+	public void setPatientFile(PatientFile patientFile) {
+		this.patientFile = patientFile;
+	}
+	
+	
 }

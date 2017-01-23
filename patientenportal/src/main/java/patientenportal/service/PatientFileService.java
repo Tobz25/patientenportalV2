@@ -2,6 +2,8 @@ package patientenportal.service;
 
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
+
 import patientenportal.dao.PatientDAOImpl;
 import patientenportal.dao.PatientFileDAOImpl;
 import patientenportal.helper.DataNotFoundException;
@@ -11,17 +13,22 @@ import patientenportal.model.PatientFile;
 public class PatientFileService {
 	
 	/* Patient liefert keine Methode, um die Patientenakte zu erhalten
-	 * 
+	 */ 
 	public PatientFile getPatientFile(long patientId){
 		PatientDAOImpl pdi = new PatientDAOImpl();
-		List<Patient> patients = pdi.getAll();
+		
+		
+		List<Patient> patients = pdi.findByCriteria(Restrictions.eq("id", patientId));
+		if (patients.size() == 0) throw new DataNotFoundException("No patient file found for id " + patientId);
+		
+		return patients.get(0).getPatientFile();
+		/*List<Patient> patients = pdi.getAll();
 		for (Patient p : patients) {
 			if (p.getId() == patientId){
-				return p.;
+				return p.getPatientFile();
 			}
-		}
-		throw new DataNotFoundException("No patient file found for id " + patientFileId);
-	}	*/
+		}*/
+	}	
 	
 	public PatientFile getPatientFileById(long patientFileId){
 		PatientFileDAOImpl pfdi = new PatientFileDAOImpl();

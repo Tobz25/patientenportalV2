@@ -23,8 +23,14 @@ public class PatientFileEndpoint {
 	
 	
 	@GET
+	@Path("/")
+	public PatientFile getPatientFile(@PathParam("patientId") long patientId){
+		return patientFileService.getPatientFileById(patientId);
+	}
+	
+	@GET
 	@Path("/{patientFileId}")
-	public PatientFile getPatientFile(@PathParam("patientFileId") long patientFileId){
+	public PatientFile getPatientFileById(@PathParam("patientFileId") long patientFileId){
 		return patientFileService.getPatientFileById(patientFileId);
 	}
 	
