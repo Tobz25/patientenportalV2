@@ -65,12 +65,8 @@ public class CaseFile {
 		this.patientFile = patientCase;
 	}
 	
-<<<<<<< HEAD
 	/*VitalData*/
-	
-=======
 	@XmlTransient
->>>>>>> 0a0a69dc8e0d0a4796adbc43e285d1a4120e550b
 	public Set<VitalDate> getVitalData() {
 		return this.vitalData;
 	}
@@ -84,12 +80,8 @@ public class CaseFile {
 		this.vitalData.add(vitalDate);
 	}
 	
-<<<<<<< HEAD
 	/*Treatment*/
-	
-=======
 	@XmlTransient
->>>>>>> 0a0a69dc8e0d0a4796adbc43e285d1a4120e550b
 	public Set<Treatment> getTreatments() {
 		return this.treatments;
 	}
@@ -103,12 +95,9 @@ public class CaseFile {
 		this.treatments.add(treatment);
 	}
 	
-<<<<<<< HEAD
 	/*MedicalDocuments*/
 	
-=======
 	@XmlTransient
->>>>>>> 0a0a69dc8e0d0a4796adbc43e285d1a4120e550b
 	public Set<MedicalDocument> getMedicalDocuments() {
 		return this.medicalDocuments;
 	}
