@@ -2,6 +2,7 @@ package patientenportal.service;
 
 import java.util.List;
 
+import patientenportal.dao.UserDAOImpl;
 import patientenportal.dao.VitalDateDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.VitalDate;
@@ -28,4 +29,11 @@ public class VitalDataService {
 		}
 		throw new DataNotFoundException("No Vital Data found for id " + VitalDataId);
 	}
+
+	/*
+	public VitalDate addVitalDate(VitalDate vitalDate) {
+		VitalDateDAOImpl vdi = new VitalDateDAOImpl();
+		vdi.addEntity(vitalDate);
+		return null;
+	}*/
 }

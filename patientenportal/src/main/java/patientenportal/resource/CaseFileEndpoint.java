@@ -43,9 +43,8 @@ public class CaseFileEndpoint {
 		return new VitalDataEndpoint();
 	}
 	
-	/*
 	@Path("/{CaseFileId}/documents")
 	public MedicalDocumentEndpoint getMedicalDocumentEndpoint(){
 		return new MedicalDocumentEndpoint();
-	}*/
+	}
 }
