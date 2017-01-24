@@ -38,6 +38,11 @@ public class CaseFileEndpoint {
 		return new TreatmentEndpoint();
 	}
 	
+	@Path("/{CaseFileId}/vitalData")
+	public VitalDataEndpoint getVitalData(){
+		return new VitalDataEndpoint();
+	}
+	
 	/*
 	@Path("/{CaseFileId}/documents")
 	public MedicalDocumentEndpoint getMedicalDocumentEndpoint(){

@@ -3,12 +3,8 @@ package patientenportal.service;
 import java.util.List;
 
 import patientenportal.dao.CaseFileDAOImpl;
-import patientenportal.dao.PatientDAOImpl;
-import patientenportal.dao.PatientFileDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.CaseFile;
-import patientenportal.model.Patient;
-import patientenportal.model.PatientFile;
 
 public class CaseFileService {
 	
