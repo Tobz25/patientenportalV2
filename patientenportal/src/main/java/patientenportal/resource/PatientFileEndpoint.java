@@ -10,6 +10,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import patientenportal.helper.Secured;
 import patientenportal.model.CaseFile;
+import patientenportal.model.MedicalDocument;
 import patientenportal.model.PatientFile;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
@@ -39,4 +40,8 @@ public class PatientFileEndpoint {
 		return new CaseFileEndpoint();
 	}
 
+	@Path("/{patientFileId}/documents")
+	public MedicalDocumentEndpoint getMedicalDocumentEndpoint(){
+		return new MedicalDocumentEndpoint();
+	}
 }
