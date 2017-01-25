@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 public class PatientTest extends JerseyTest{
 	
 	String rightToken = "";
+	private long testId=0;
 
 	@Override
 	protected Application configure(){
@@ -40,7 +41,7 @@ public class PatientTest extends JerseyTest{
 	
 	@Test
 	public void  testGetPatient() {
-		Response response = target("patients/1")
+		Response response = target("patients/"+testId)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + rightToken)
 				.get();
@@ -48,7 +49,7 @@ public class PatientTest extends JerseyTest{
 		Patient patient = response.readEntity(Patient.class); 
 		String answer = patient.getUser().toString();
 		System.out.println("User "+ answer);
-		assertFalse(answer.equals(""));
+		assertTrue(patient.getId()==testId);
 	}
 	
 }
