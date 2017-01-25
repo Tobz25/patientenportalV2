@@ -1,5 +1,7 @@
 package patientenportal.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,6 +27,22 @@ public class PatientFile {
 	@OneToOne
 	private Patient patient;
 	
+/*
+	
+	@XmlTransient
+	@OneToMany
+	private Set<Link> links;
+	
+	@XmlTransient
+	public Set<Link> getLinks() {
+		return links;
+	}
+
+	@XmlTransient
+	public void setLinks(Set<Link> links) {
+		this.links = links;
+	}*/
+
 	@OneToMany(mappedBy="patientFile", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Set<CaseFile> caseFiles;
@@ -76,5 +94,12 @@ public class PatientFile {
 		medicalDocument.setPatientFile(this);
 		this.medicalDocuments.add(medicalDocument);
 	}
+	/*
+	public void addLink(String url, String rel){
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		links.add(link);
+	}*/
 	
 }

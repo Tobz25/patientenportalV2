@@ -36,16 +36,13 @@ public class UserEndpoint {
 	public User getUser(@PathParam("userId") long userId) {
 		return userService.getUserById(userId);
 	}
-	
-	
-	//TODO: gibt bisher null zurück (DAO und Service noch anpassen)
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User addUser(User user){
 		return userService.addUser(user);		
 	}
 	
-	//TODO: gibt bisher null zurück (DAO und Service noch anpassen)
 	@PUT
 	@Path("/{userId}")
 	@Consumes(MediaType.APPLICATION_JSON)

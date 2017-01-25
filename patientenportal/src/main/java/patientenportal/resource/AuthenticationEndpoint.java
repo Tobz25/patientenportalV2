@@ -2,11 +2,15 @@ package patientenportal.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import patientenportal.dao.UserDAOImpl;
 import patientenportal.model.User;
@@ -27,6 +31,7 @@ public class AuthenticationEndpoint {
 	}
 	
     @POST
+    @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes("application/x-www-form-urlencoded")
     public Response authenticateUser(@FormParam("username") String username, 
@@ -45,7 +50,11 @@ public class AuthenticationEndpoint {
 
         } catch (Exception e) {
         	System.out.println("Fehler: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+        	Response unauthorizedStatus = Response
+					.status(Response.Status.UNAUTHORIZED)
+					.entity("Login failed. Username or password are incorrect.")
+					.build();
+            return unauthorizedStatus;
         }      
     }
 
@@ -63,6 +72,23 @@ public class AuthenticationEndpoint {
         // Return the issued token
     	String token = sessionService.createSessionToken(user);
     	return token;
+    }
+    
+    @GET
+    @Path("/logout")
+    public Response logout(ContainerRequestContext requestContext){
+    	
+    	
+	   try {
+		    String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+	    	String token = authorizationHeader.substring("Bearer".length()).trim();
+	    	return authService.logout(token);
+	   }
+	   catch(Exception e) {
+	    	return Response.status(Status.NOT_ACCEPTABLE)
+	    			.entity("Logout is not possible. No or unvalid session token transmitted")
+				.build();
+	   }
     }
     
     @POST

@@ -22,9 +22,21 @@ public class MedicationPrescriptionEndpoint {
 	SecurityContext securityContext;
 	MedicationPrescriptionService medicationPrescriptionService = new MedicationPrescriptionService();
 	
-	@GET	
-	public Set<MedicationPrescription> getMedicationPrescription(@PathParam("treatmentId") long treatmentId){
-		return medicationPrescriptionService.getMedicationPrescription(treatmentId);
+	@GET
+	public Set<MedicationPrescription> getMedicationPrescriptions(@PathParam("treatmentId") long treatmentId){
+		return medicationPrescriptionService.getMedicationPrescriptions(treatmentId);
+	}
+	
+	@GET
+	@Path("/{prescriptionID}")
+	public MedicationPrescription getMedicationPrescription(@PathParam("prescriptionID") long prescriptionId){
+		return medicationPrescriptionService.getMedicationPrescriptionById(prescriptionId);
+	}
+	
+	@GET
+	@Path("/{medicationPrescriptionId}/medication")
+	public MedicationEndpoint getMedicationEndpoint(){
+		return new MedicationEndpoint();
 	}
 
 }

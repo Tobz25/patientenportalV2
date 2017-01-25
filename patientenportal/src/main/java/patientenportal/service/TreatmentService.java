@@ -35,11 +35,17 @@ public class TreatmentService {
 		throw new DataNotFoundException("Treatment with id " + treatmentId + " not found");
 	}
 	
-	//TODO: Return the added Object (change addEntity to return ID of the created Object)
+
 	public Treatment addTreatment(Treatment treatment){
 		TreatmentDAOImpl tdi = new TreatmentDAOImpl();
-		tdi.addEntity(treatment);
-		return null;
+		Treatment createdTreatment = tdi.addEntityAndReturn(treatment);
+		return createdTreatment;
+	}
+	
+	public Treatment updateTreatment(Treatment treatment){
+		TreatmentDAOImpl tdi = new TreatmentDAOImpl();
+		tdi.updateEntity(treatment);
+		return treatment;
 	}
 	
 

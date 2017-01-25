@@ -31,14 +31,13 @@ public class UserService {
 		throw new DataNotFoundException("User with id " + userId + " not found");
 	}	
 	
-	//TODO: neu angelegten user zurückgeben (addEntity anpassen)
 	public User addUser(User user){
 		UserDAOImpl udi = new UserDAOImpl();
-		udi.addEntity(user);
-		return null;
+		User createdUser = udi.addEntityAndReturn(user);
+		return createdUser;
 	}
 	
-	//TODO: neu angelegten user zurückgeben (addEntity anpassen)
+	//TODO: ID mitgeben. Bisher wird immer ein neuer User angelegt!
 		public User updateUser(User user){
 			UserDAOImpl udi = new UserDAOImpl();
 			udi.updateEntity(user);

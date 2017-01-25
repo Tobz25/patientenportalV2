@@ -12,17 +12,17 @@ import patientenportal.model.Treatment;
 import patientenportal.model.User;
 import patientenportal.model.VitalDate;
 
-public class MedicationPrescriptionDAOImpl extends GenericDAOImpl<MedicationIntake, Long>{
+public class MedicationPrescriptionDAOImpl extends GenericDAOImpl<MedicationPrescription, Long>{
 
 	@Override
-	public MedicationIntake addEntityIntern(MedicationIntake entity) {
-		MedicationIntake newI = new MedicationIntake();
+	public MedicationPrescription addEntityIntern(MedicationPrescription entity) {
+		MedicationPrescription newI = new MedicationPrescription();
         
 		newI.setDescription(entity.getDescription());
-		newI.setDateTime(entity.getDateTime());
-		newI.setDrug(entity.getDrug());
-		newI.setPrescription(entity.getPrescription());
+		newI.setDoctor(entity.getResponsibleDoctor());
+		newI.setMedication(entity.getMedications());
 		newI.setTreatment(entity.getTreatment());
+		newI.setWritingDateTime(entity.getWritingDateTime());
 		return newI; 
 	}
 

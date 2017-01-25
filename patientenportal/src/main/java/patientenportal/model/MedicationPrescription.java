@@ -11,8 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-
+import javax.xml.bind.annotation.XmlTransient;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -61,6 +60,7 @@ public class MedicationPrescription{
 		this.treatment = treatment;
 	}
 	
+	@XmlTransient
 	public Set<Medication> getMedications() {
 		return this.medications;
 	}
