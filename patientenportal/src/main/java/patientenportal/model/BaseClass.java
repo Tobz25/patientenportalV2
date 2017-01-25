@@ -1,16 +1,46 @@
 package patientenportal.model;
 
-public abstract class BaseClass {
+import java.util.Set;
 
-	private long Id;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+
+
+@Entity(name="BASECLASS")
+@Inheritance(strategy=InheritanceType.JOINED)
+public class BaseClass {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	@ManyToMany(mappedBy="elements")
+	private Set<Permission> permissons;
 	
 	/*
 	 * Getter & Setter
 	 */
 	
 	public long getId() {
-		return this.Id;
+		return this.id;
 	}
 	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public Set<Permission> getPermissions() {
+		return this.permissons;
+	}
+	
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissons = permissions;
+	}
 }
 

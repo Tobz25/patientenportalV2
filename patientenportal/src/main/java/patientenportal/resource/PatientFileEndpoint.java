@@ -15,6 +15,7 @@ import javax.ws.rs.core.UriInfo;
 import patientenportal.helper.MySecurityContext;
 import patientenportal.helper.Secured;
 import patientenportal.model.CaseFile;
+import patientenportal.model.MedicalDocument;
 import patientenportal.model.PatientFile;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
@@ -82,4 +83,8 @@ public class PatientFileEndpoint {
 		return permissionService.setPermission(patientFile, userId, permission);
 	}
 
+	@Path("/{patientFileId}/documents")
+	public MedicalDocumentEndpoint getMedicalDocumentEndpoint(){
+		return new MedicalDocumentEndpoint();
+	}
 }

@@ -9,32 +9,28 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import patientenportal.MyResource;
+import patientenportal.model.Doctor;
 import patientenportal.resource.AuthenticationEndpoint;
+import patientenportal.resource.DoctorEndpoint;
 
-
-public class UserTest extends JerseyTest {
-
+public class DoctorTest extends JerseyTest{
+	
+	private long testId;
 	private String token;
 	
 	@Override
 	protected Application configure() {
-	    return new ResourceConfig(AuthenticationEndpoint.class, MyResource.class);
+	    return new ResourceConfig(AuthenticationEndpoint.class, DoctorEndpoint.class);
 	}
 	
-	
-	/*
-	 * Überprüft, ob Token zurückgegeben wird.
-	 */
-	
 	@Before
-	public void test() {
+	public void doBefore(){
 		Form form = new Form();
 		form.param("username", "haku");
 		form.param("password", "haku");
@@ -43,35 +39,20 @@ public class UserTest extends JerseyTest {
         token = response.readEntity(String.class);
 		System.out.println("Test erg:" + response.toString());
 		System.out.println("Token: " + token + " - " + token.length());
-        assertNotNull(response);
-        assertTrue(token.length() == 26);
 	}
-	
-	
+
 	@Test
-	public void  testAccessMyResource() {
-		Response response = target("myresource")
+	public void testGetDoctor() {
+		Response response = target("/doctors/"+testId)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
-		//String x = String.valueOf(response);
-		String answer = response.readEntity(String.class);
-		System.out.println("answer: "+ answer);
-		//System.out.println("Antwort:" + answer + " - " + x);
-		System.out.println("Status: " + response.getStatus());
-		//Erwartet: Status 404, da SecurityFilter blockt
-		
-		assertTrue(answer == "Got it!");
-		
+		assertTrue(response.readEntity(Doctor.class).getId()==testId);
 	}
 	
-	/*
-	@Test
-	public void testHibernateAccess() {
-		Response response = target("hibernate/access").request().get();
-		String answer = response.readEntity(String.class);
-		System.out.println("Antwort:" + answer);
-		assertNull(answer);
-	}*/
+	@After
+	public void doAfter(){
+		//clean up
+	}
 
 }

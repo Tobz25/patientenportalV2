@@ -9,23 +9,22 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import patientenportal.MyResource;
+import patientenportal.model.CaseFile;
 import patientenportal.resource.AuthenticationEndpoint;
+import patientenportal.resource.CaseFileEndpoint;
 
+public class CaseFileTest extends JerseyTest{
 
-public class UserTest extends JerseyTest {
-
-	private String token;
+private String token;
 	
 	@Override
 	protected Application configure() {
-	    return new ResourceConfig(AuthenticationEndpoint.class, MyResource.class);
+	    return new ResourceConfig(AuthenticationEndpoint.class, CaseFileEndpoint.class);
 	}
 	
 	
@@ -34,7 +33,7 @@ public class UserTest extends JerseyTest {
 	 */
 	
 	@Before
-	public void test() {
+	public void doBefore() {
 		Form form = new Form();
 		form.param("username", "haku");
 		form.param("password", "haku");
@@ -48,30 +47,17 @@ public class UserTest extends JerseyTest {
 	}
 	
 	
+	
 	@Test
-	public void  testAccessMyResource() {
-		Response response = target("myresource")
+	public void testGetCaseFile() {
+		Response response = target("patients/0/patientFile/0/caseFiles/0")
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
-		//String x = String.valueOf(response);
-		String answer = response.readEntity(String.class);
-		System.out.println("answer: "+ answer);
-		//System.out.println("Antwort:" + answer + " - " + x);
-		System.out.println("Status: " + response.getStatus());
-		//Erwartet: Status 404, da SecurityFilter blockt
-		
-		assertTrue(answer == "Got it!");
-		
+		CaseFile file = response.readEntity(CaseFile.class);
+		String answer = file.toString();
+		System.out.println("Antwort: " + answer);
+		assertTrue(file.getId()==0);
 	}
-	
-	/*
-	@Test
-	public void testHibernateAccess() {
-		Response response = target("hibernate/access").request().get();
-		String answer = response.readEntity(String.class);
-		System.out.println("Antwort:" + answer);
-		assertNull(answer);
-	}*/
 
 }

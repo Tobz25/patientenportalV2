@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,14 +18,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @XmlRootElement
-@Entity
-public class Medication{
+@Entity(name="medication")
+@PrimaryKeyJoinColumn(name="baseclass_id")
+public class Medication extends BaseClass{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private Long Id;
-
 	@ManyToMany(mappedBy="medications")
 	private Set<MedicationPrescription> prescriptions;
 
@@ -41,11 +38,7 @@ public class Medication{
 	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof Medication) && Id != null && Id.equals(((Medication) obj).getId());
-	}
-
-	public long getId() {
-		return Id;
+		return true; //(obj == this) || (obj instanceof Medication) && Id != null && Id.equals(((Medication) obj).getId());
 	}
 
 	@XmlTransient

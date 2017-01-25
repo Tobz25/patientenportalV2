@@ -10,16 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-@Entity
+@Entity(name="websession")
+@PrimaryKeyJoinColumn(name="baseclass_id")
 public class WebSession extends BaseClass {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long Id;
 
 	@Column
 	private String token;

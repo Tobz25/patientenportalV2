@@ -4,10 +4,12 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.persistence.Id;
@@ -17,14 +19,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @XmlRootElement
-@Entity
-public class CaseFile {
+@Entity(name="casefile")
+@PrimaryKeyJoinColumn(name="baseclass_id")
+public class CaseFile extends BaseClass {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private Long Id;
-
 	@ManyToOne
 	private PatientFile patientFile;
 
@@ -48,11 +46,7 @@ public class CaseFile {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof CaseFile) && Id != null && Id.equals(((CaseFile) obj).getId());
-	}
-
-	public long getId() {
-		return Id;
+		return (obj == this) || (obj instanceof CaseFile) && getId() == (((CaseFile) obj).getId());
 	}
 
 	/*Patientfile*/

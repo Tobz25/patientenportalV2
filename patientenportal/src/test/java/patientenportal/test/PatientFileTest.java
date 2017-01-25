@@ -2,6 +2,7 @@ package patientenportal.test;
 
 import static org.junit.Assert.*;
 
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Form;
@@ -39,16 +40,15 @@ public class PatientFileTest extends JerseyTest{
 
 	@Test
 	public void test() {
-		Response response = target("/patients/1/patientFile/1")
+		Response response = target("/patients/0/patientFile/0")
 								.request()
 								.header(HttpHeaders.AUTHORIZATION, "Bearer " + rightToken)
 								.get();
 		PatientFile file = response.readEntity(PatientFile.class);
 		String answer = file.toString();
-		System.out.println(answer);
+		System.out.println("Antwort: " + answer);
 		
 		
-		fail("Not yet implemented");
 	}
 
 }

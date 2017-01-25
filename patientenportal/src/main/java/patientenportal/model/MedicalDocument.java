@@ -20,14 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @XmlRootElement
-@Entity
-public class MedicalDocument{
+@Entity(name="medicaldocument")
+public class MedicalDocument extends BaseClass{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private Long Id;
-
 	@ManyToOne
 	private CaseFile caseFile;
 
@@ -46,11 +41,7 @@ public class MedicalDocument{
 	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof MedicalDocument) && Id != null && Id.equals(((MedicalDocument) obj).getId());
-	}
-
-	public long getId() {
-		return Id;
+		return true; // (obj == this) || (obj instanceof MedicalDocument) && Id != null && Id.equals(((MedicalDocument) obj).getId());
 	}
 
 	public CaseFile getCaseFile() {
