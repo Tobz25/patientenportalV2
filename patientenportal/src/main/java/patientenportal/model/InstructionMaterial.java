@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,15 +23,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @XmlRootElement
-@Entity
+@Entity(name="instructionmaterial")
+@PrimaryKeyJoinColumn(name="baseclass_id")
 /*Schulungsunterlagen --> kranheitsfallspezifisch*/
-public class InstructionMaterial{
+public class InstructionMaterial extends BaseClass{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private Long Id;
-
 	@ManyToMany
 	@JoinTable
 	private Set<CaseFile> caseFiles;
@@ -40,13 +37,7 @@ public class InstructionMaterial{
 	
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof InstructionMaterial) && Id != null && Id.equals(((InstructionMaterial) obj).getId());
-	}
-
-	/*Id*/
-	
-	public long getId() {
-		return Id;
+		return true;//(obj == this) || (obj instanceof InstructionMaterial) && Id != null && Id.equals(((InstructionMaterial) obj).getId());
 	}
 	
 	/*Casefiles*/

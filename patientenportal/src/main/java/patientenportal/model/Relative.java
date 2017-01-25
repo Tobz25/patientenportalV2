@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @AttributeOverrides({  
-    @AttributeOverride(name="id", column=@Column(name="id")),  
+    @AttributeOverride(name="baseclass_id", column=@Column(name="baseclass_id")),  
     @AttributeOverride(name="user", column=@Column(name="user"))  
 })  
-public class Relative extends UserRole {
+public class Relative extends UserGroup {
 	
 }

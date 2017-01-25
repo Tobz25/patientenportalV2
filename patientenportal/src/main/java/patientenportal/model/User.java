@@ -10,19 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 
 @XmlRootElement
-@Entity
+@Entity(name="User")
+@PrimaryKeyJoinColumn(name="baseclass_id")
 public class User extends BaseClass {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private Long Id;
-
 	@Column(nullable = false)
 	private String username;
 
@@ -42,19 +39,19 @@ public class User extends BaseClass {
 	private String password;
 	
 	@OneToMany
-	private Set<UserRole> userRoles;
+	private Set<UserGroup> userRoles;
 	
 	@OneToOne
-	private UserRole activeRole;
+	private UserGroup activeRole;
 	
 	public String toString() {
-		return "(" + Id + " "+ username +" " + salutation + " " + firstname + " " + 
+		return "(" + getId() + " "+ username +" " + salutation + " " + firstname + " " + 
 				lastname + "" + emailaddress +" " + password + ") ";
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj == this) || (obj instanceof User) && Id != null && Id.equals(((User) obj).getId());
+		return true;//return (obj == this) || (obj instanceof User) && Id != null && Id.equals(((User) obj).getId());
 	}
 
 	
@@ -63,12 +60,6 @@ public class User extends BaseClass {
 	 * Methods - Hibernate - userRoles
 	 * ::::::::::::::::::::::::::::::::::::::
 	 */
-
-	/*Id*/
-	
-	public long getId() {
-		return Id;
-	}
 
 	/*Username*/
 	
@@ -133,15 +124,15 @@ public class User extends BaseClass {
 	/*Useroles*/
 	
 	@XmlTransient
-	public Set<UserRole> getUserRoles() {
+	public Set<UserGroup> getUserRoles() {
 		return this.userRoles;
 	}
 	
-	public void setUserRoles(Set<UserRole> userRoles) {
+	public void setUserRoles(Set<UserGroup> userRoles) {
 		this.userRoles = userRoles;
 	}
 	
-	public void addUserRole(UserRole userRole) {
+	public void addUserRole(UserGroup userRole) {
 		userRole.setUser(this);
 		this.userRoles.add(userRole);
 	}
@@ -149,11 +140,11 @@ public class User extends BaseClass {
 	/*activeRole*/
 	
 	@XmlTransient
-	public UserRole getActiveUserRole() {
+	public UserGroup getActiveUserRole() {
 		return this.activeRole;
 	}
 	
-	public void setActiveUserRole(UserRole activeRole) {
+	public void setActiveUserRole(UserGroup activeRole) {
 		this.activeRole = activeRole;
 	}
 
