@@ -37,5 +37,14 @@ public class CaseFileEndpoint {
 	public TreatmentEndpoint getTreatmentsEndpoint(){
 		return new TreatmentEndpoint();
 	}
-
+	
+	@Path("/{CaseFileId}/vitalData")
+	public VitalDataEndpoint getVitalData(){
+		return new VitalDataEndpoint();
+	}
+	
+	@Path("/{CaseFileId}/documents")
+	public MedicalDocumentEndpoint getMedicalDocumentEndpoint(){
+		return new MedicalDocumentEndpoint();
+	}
 }
