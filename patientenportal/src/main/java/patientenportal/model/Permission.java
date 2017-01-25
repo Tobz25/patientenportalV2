@@ -69,6 +69,7 @@ public class Permission extends BaseClass {
 		this.permissionType = permissionType;
 	}
 	
+	@XmlTransient
 	public Set<UserGroup> getUserGroup() {
 		return this.usergroups;
 	}
@@ -87,6 +88,7 @@ public class Permission extends BaseClass {
 		usergroup.getPermissions().remove(this);
 	}
 	
+	@XmlTransient
 	public Set<BaseClass> getElements() {
 		return this.elements;
 	}

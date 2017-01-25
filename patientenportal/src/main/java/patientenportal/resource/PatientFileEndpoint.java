@@ -46,6 +46,7 @@ public class PatientFileEndpoint {
 										  @Context SecurityContext securityContext){
 		MySecurityContext context = (MySecurityContext) securityContext;
 		long userId = context.getUserId();
+		if (permissionService.checkReadPermission(loggedInUser, entity))
 		Permission hasPermission= permissionService.getPermission();
 		if(hasPermission == ""){
 			return patientFileService.getPatientFileById(patientFileId);

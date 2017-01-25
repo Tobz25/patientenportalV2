@@ -41,6 +41,7 @@ public class UserGroup extends BaseClass {
 		this.user = user;
 	}
 	
+	@XmlTransient
 	public Set<Permission> getPermissions() {
 		return this.permissons;
 	}
