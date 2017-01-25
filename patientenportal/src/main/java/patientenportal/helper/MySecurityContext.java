@@ -15,15 +15,7 @@ public class MySecurityContext implements SecurityContext{
 
     @Override
     public Principal getUserPrincipal() {
-        /*return new Principal() {
-            @Override
-            public String getName() {
-                return user.getUsername();
-            }
-        	return this.user;
-            
-        };*/
-        return this.user;
+    	return this.user;
     }
     
     public long getUserId(){

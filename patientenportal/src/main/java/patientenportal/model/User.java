@@ -1,5 +1,6 @@
 package patientenportal.model;
 
+import java.security.Principal;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Entity(name="User")
 @PrimaryKeyJoinColumn(name="baseclass_id")
-public class User extends BaseClass {
+public class User extends BaseClass implements Principal{
 	
 	@Column(nullable = false)
 	private String username;
@@ -150,6 +151,12 @@ public class User extends BaseClass {
 
 	public String getFullName() {
 		return lastname + ", " + firstname;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
