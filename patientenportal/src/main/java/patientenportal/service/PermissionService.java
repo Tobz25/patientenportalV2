@@ -5,7 +5,13 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.CriteriaQuery;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.engine.spi.TypedValue;
 
 import patientenportal.dao.BaseClassDAOImpl;
 import patientenportal.dao.PermissionDAOImpl;
@@ -25,17 +31,13 @@ public class PermissionService {
 	
 	public boolean checkReadPermission(UserGroup loggedInUser, BaseClass entity){
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
-		List<Permission> perm = pdao.findByCriteria(Restrictions.and(Restrictions.eq("usergroup_id", loggedInUser.getId()),
-				Restrictions.and(Restrictions.eq("element_id", entity.getId())), Restrictions.eq("permissiontype", PermissionType.READ.toString())));
 		
-		return perm.size() == 1;
+		return pdao.checkReadPermission(loggedInUser, entity);
 	}
 	public boolean checkWritePermission(UserGroup loggedInUser, BaseClass entity) {
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
-		List<Permission> perm = pdao.findByCriteria(Restrictions.and(Restrictions.eq("usergroup_id", loggedInUser.getId()),
-				Restrictions.and(Restrictions.eq("element_id", entity.getId())), Restrictions.eq("permissiontype", PermissionType.WRITE.toString())));
 		
-		return perm.size() == 1;
+		return pdao.checkWritePermission(loggedInUser, entity);
 	}
 	
 	

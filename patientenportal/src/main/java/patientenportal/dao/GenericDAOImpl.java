@@ -11,6 +11,7 @@ import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.criteria.internal.CriteriaBuilderImpl;
@@ -125,5 +126,18 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 	    
 	    return entityList;
 	}
-
+	
+	
+	public List<T> findByDetachedCriteria(DetachedCriteria crit) {
+		Session session = SessionUtil.getSession();
+		Transaction tx = startTA(session);
+		
+		List<T> entityList = crit.getExecutableCriteria(session).list();
+		
+		tx.commit();
+		session.close();
+		    
+		return entityList;  
+	}
+ 
 }
