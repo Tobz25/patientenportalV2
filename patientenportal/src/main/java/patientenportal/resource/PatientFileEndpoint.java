@@ -48,7 +48,7 @@ public class PatientFileEndpoint {
 										  @Context SecurityContext securityContext){
 		//MySecurityContext context = (MySecurityContext) securityContext;
 		User user = (User) securityContext.getUserPrincipal();
-		if (permissionService.checkReadPermission(user.getId(), patientFileId)){
+		if (permissionService.checkReadPermission(user.getActiveUserRole().getId(), patientFileId)){
 			return patientFileService.getPatientFileById(patientFileId);
 		}
 		else{

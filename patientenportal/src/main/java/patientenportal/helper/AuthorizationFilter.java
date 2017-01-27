@@ -11,12 +11,14 @@ import javax.annotation.Priority;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 
 import patientenportal.model.Role;
-
+import patientenportal.model.User;
+/*
 @Secured
 @Provider
 @Priority(Priorities.AUTHORIZATION)
@@ -37,6 +39,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         // Extract the roles declared by it
         Method resourceMethod = resourceInfo.getResourceMethod();
         List<Role> methodRoles = extractRoles(resourceMethod);
+        User user = (User) requestContext.getSecurityContext().getUserPrincipal();
 
         try {
 
@@ -77,4 +80,4 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         // Check if the user contains one of the allowed roles
         // Throw an Exception if the user has not permission to execute the method
     }
-}
+}*/
