@@ -19,7 +19,7 @@ import patientenportal.service.AuthenticationService;
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class SecurityFilter implements ContainerRequestFilter{
+public class AuthenticationFilter implements ContainerRequestFilter{
 	
 	AuthenticationService authService = new AuthenticationService();
 
