@@ -60,4 +60,9 @@ public class Patient extends UserGroup {
 		this.permissionsAuthorised.remove(permission);
 		permission.setPatient(null);
 	}
+	
+	@Override
+	public Role getRole() {
+		return Role.Patient;
+	}
 }

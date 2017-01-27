@@ -18,5 +18,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @AttributeOverride(name="user", column=@Column(name="user"))  
 })  
 public class Relative extends UserGroup {
-	
+
+	@Override
+	public Role getRole() {
+		return Role.Relative;
+	}
 }

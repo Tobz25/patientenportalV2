@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Priority;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
@@ -18,7 +19,7 @@ import javax.ws.rs.ext.Provider;
 
 import patientenportal.model.Role;
 import patientenportal.model.User;
-/*
+
 @Secured
 @Provider
 @Priority(Priorities.AUTHORIZATION)
@@ -46,14 +47,18 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             // Check if the user is allowed to execute the method
             // The method annotations override the class annotations
             if (methodRoles.isEmpty()) {
-                checkPermissions(classRoles);
+                checkPermissions(classRoles, user);
             } else {
-                checkPermissions(methodRoles);
+                checkPermissions(methodRoles, user);
             }
 
         } catch (Exception e) {
-            requestContext.abortWith(
-                Response.status(Response.Status.FORBIDDEN).build());
+        	Response unauthorizedStatus = Response
+					.status(Response.Status.FORBIDDEN)
+					.entity("User does not have the necessary permission to access the ressource.")
+					.build();
+
+	        requestContext.abortWith(unauthorizedStatus);
         }
     }
 
@@ -72,12 +77,16 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         }
     }
 
-    private void checkPermissions(List<Role> allowedRoles) throws Exception {
+    private void checkPermissions(List<Role> allowedRoles, User user) throws Exception {
+    	Role userRole = user.getActiveUserRole().getRole();
+    	
     	if(allowedRoles.size()==0){
     		return;
     	}
-    	else if(re)
+    	else if(allowedRoles.contains(userRole))
+    		return;
+    	else throw new Exception();
         // Check if the user contains one of the allowed roles
         // Throw an Exception if the user has not permission to execute the method
     }
-}*/
+}

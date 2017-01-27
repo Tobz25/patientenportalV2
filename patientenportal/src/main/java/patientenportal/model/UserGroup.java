@@ -49,5 +49,10 @@ public class UserGroup extends BaseClass {
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissons = permissions;
 	}
+	
+	
+	public Role getRole(){
+		return Role.Other;
+	}
 
 }

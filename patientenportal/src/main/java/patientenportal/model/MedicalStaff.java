@@ -19,5 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 })  
 public class MedicalStaff extends UserGroup {
 	
-
+	@Override
+	public Role getRole() {
+		return Role.MedicalStaff;
+	}
 }

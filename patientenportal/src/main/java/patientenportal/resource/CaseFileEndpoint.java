@@ -12,6 +12,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import patientenportal.helper.Secured;
 import patientenportal.model.CaseFile;
+import patientenportal.model.Role;
 import patientenportal.service.CaseFileService;
 
 
@@ -38,6 +39,7 @@ public class CaseFileEndpoint {
 		return new TreatmentEndpoint();
 	}
 	
+	@Secured({Role.Patient})
 	@Path("/{CaseFileId}/vitalData")
 	public VitalDataEndpoint getVitalData(){
 		return new VitalDataEndpoint();
