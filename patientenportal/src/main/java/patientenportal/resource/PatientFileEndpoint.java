@@ -18,6 +18,7 @@ import patientenportal.helper.UnauthorizedException;
 import patientenportal.model.CaseFile;
 import patientenportal.model.MedicalDocument;
 import patientenportal.model.PatientFile;
+import patientenportal.model.Role;
 import patientenportal.model.User;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
@@ -33,6 +34,7 @@ public class PatientFileEndpoint {
 	
 	
 	@GET
+	@Secured({Role.Patient})
 	@Path("/")
 	public PatientFile getPatientFile(@PathParam("patientId") long patientId, @Context UriInfo uriInfo){
 		PatientFile patientFile = patientFileService.getPatientFile(patientId);
@@ -52,7 +54,7 @@ public class PatientFileEndpoint {
 			return patientFileService.getPatientFileById(patientFileId);
 		}
 		else{
-			throw new UnauthorizedException("User does not have access to the requeste ressource");
+			throw new UnauthorizedException("User does not have access to the requested ressource");
 		}
 
 	}

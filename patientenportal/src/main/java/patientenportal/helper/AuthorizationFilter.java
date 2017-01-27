@@ -42,24 +42,30 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         List<Role> methodRoles = extractRoles(resourceMethod);
         User user = (User) requestContext.getSecurityContext().getUserPrincipal();
 
-        try {
 
             // Check if the user is allowed to execute the method
             // The method annotations override the class annotations
             if (methodRoles.isEmpty()) {
-                checkPermissions(classRoles, user);
-            } else {
-                checkPermissions(methodRoles, user);
+                if(checkPermissions(classRoles, user)== true)
+                {
+                	return;
+	            }
+	            else
+	            {
+	            	throw new ForbiddenRequestException("User does not have the permission to perform the request");
+	            }
+            } 
+            else 
+            {
+                if (checkPermissions(methodRoles, user)== true)
+                {
+                	return;
+                }
+                else
+                {
+                		throw new ForbiddenRequestException("User does not have the permission to perform the request");
+                }
             }
-
-        } catch (Exception e) {
-        	Response unauthorizedStatus = Response
-					.status(Response.Status.FORBIDDEN)
-					.entity("User does not have the necessary permission to access the ressource.")
-					.build();
-
-	        requestContext.abortWith(unauthorizedStatus);
-        }
     }
 
     // Extract the roles from the annotated element
@@ -77,15 +83,15 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         }
     }
 
-    private void checkPermissions(List<Role> allowedRoles, User user) throws Exception {
+    private boolean checkPermissions(List<Role> allowedRoles, User user){
     	Role userRole = user.getActiveUserRole().getRole();
     	
     	if(allowedRoles.size()==0){
-    		return;
+    		return true;
     	}
     	else if(allowedRoles.contains(userRole))
-    		return;
-    	else throw new Exception();
+    		return true;
+    	else return false;
         // Check if the user contains one of the allowed roles
         // Throw an Exception if the user has not permission to execute the method
     }

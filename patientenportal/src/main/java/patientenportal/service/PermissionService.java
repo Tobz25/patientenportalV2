@@ -43,14 +43,17 @@ public class PermissionService {
 	
 	public boolean checkReadPermission(long usergroupID, long classId) {
 		UserGroupDAOImpl udao = new UserGroupDAOImpl();
-		List<UserGroup> users = udao.findByCriteria(Restrictions.eq("baseclass_id", usergroupID));
-		if (users.size() != 1) return false;//throw new Exception(hat den nutzer nicht gefunden);
+		//List<UserGroup> users = udao.findByCriteria(Restrictions.eq("baseclass_id", usergroupID));
+		UserGroup group = udao.findById(usergroupID);
+		
+		if (group == null) return false;//throw new Exception(hat den nutzer nicht gefunden);
 		
 		BaseClassDAOImpl bdao = new BaseClassDAOImpl();
-		List<BaseClass> classes = bdao.findByCriteria(Restrictions.eq("id", classId));
-		if (classes.size() != 1) return false; //throw new Exception(hat den baseclass nicht gefunden);
 		
-		return checkReadPermission(users.get(0), classes.get(0));
+		BaseClass classes = bdao.findById(classId);
+		if (classes == null) return false; //throw new Exception(hat den baseclass nicht gefunden);
+		
+		return checkReadPermission(group, classes);
 	}
 	
 	public Response addPermission(BaseClass entity, Patient patient, UserGroup userGroup, PermissionType type) {

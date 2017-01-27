@@ -37,8 +37,8 @@ public class PermissionDAOImpl extends GenericDAOImpl<Permission, Long>{
 		c.createAlias("elements", "e");
 		c.add(Restrictions.eq("e.id", entity.getId()));
 		c.createAlias("usergroups", "u");
-		c.add(Restrictions.eq("baseclass_id", user.getId()));
-		c.add(Restrictions.eq("permissiontype", PermissionType.READ.toString()));
+		c.add(Restrictions.eq("u.id", user.getId()));
+		c.add(Restrictions.eq("permissionType", PermissionType.READ));
 		List<Permission> perm = findByDetachedCriteria(c);
 		
 		return perm.size() == 1;
@@ -50,7 +50,7 @@ public class PermissionDAOImpl extends GenericDAOImpl<Permission, Long>{
 		c.add(Restrictions.eq("e.id", entity.getId()));
 		c.createAlias("usergroups", "u");
 		c.add(Restrictions.eq("baseclass_id", user.getId()));
-		c.add(Restrictions.eq("permissiontype", PermissionType.WRITE.toString()));
+		c.add(Restrictions.eq("permissiontype", PermissionType.WRITE));
 		List<Permission> perm = findByDetachedCriteria(c);
 		
 		return perm.size() == 1;

@@ -42,14 +42,8 @@ public class AuthenticationFilter implements ContainerRequestFilter{
 	    	        return;
 	        	}
 	        }
-
 	        
-	        Response unauthorizedStatus = Response
-					.status(Response.Status.UNAUTHORIZED)
-					.entity("User cannot access the resource.")
-					.build();
-
-	        requestContext.abortWith(unauthorizedStatus);
+	        throw new UnauthorizedException("Client has to be logged in to access the ressource");
 	        
 		
 	}

@@ -27,7 +27,7 @@
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>  
         <property name="cache.use_query_cache">false</property>  
         <property name="cache.use_minimal_puts">false</property>  
-        <property name="max_fetch_depth">3</property>  
+        <property name="max_fetch_depth">0</property>  
   
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>

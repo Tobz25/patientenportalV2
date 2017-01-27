@@ -17,14 +17,7 @@ public class SessionService {
 		wss.setUser(user);
 		wss.setToken(getNewToken());
 		
-		wsdi.addEntity(wss);
-		
-		List<WebSession> sessions = wsdi.findAll();
-		for (WebSession ws : sessions) {
-			if (ws.getUser().equals(user)) return ws.getToken();
-		}
-		
-		return null;
+		return (wsdi.addEntityAndReturn(wss)).getToken();
 	}
 	
 	public String getNewToken() {
