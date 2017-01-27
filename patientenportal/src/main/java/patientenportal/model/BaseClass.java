@@ -7,6 +7,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

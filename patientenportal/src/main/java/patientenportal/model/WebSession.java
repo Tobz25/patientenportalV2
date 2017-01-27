@@ -2,6 +2,7 @@ package patientenportal.model;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.Random;
 
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -24,6 +27,10 @@ public class WebSession extends BaseClass {
 	
 	@OneToOne
 	private User user;
+	
+	@Column(name="validtill", columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date validtill;
 	
 	public String getToken() {
 		return token;
@@ -43,5 +50,13 @@ public class WebSession extends BaseClass {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public Date getValidTill() {
+		return validtill;
+	}
+	
+	public void setValidTill(Date validtill) {
+		this.validtill = validtill;
 	}
 }
