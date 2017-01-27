@@ -19,7 +19,6 @@ public class MedicationDAOImpl extends GenericDAOImpl<Medication, Long>{
 		newMedication.setDescription(entity.getDescription());
 		newMedication.setDrug(entity.getDrug());
 		newMedication.setPrescriptions(entity.getPrescriptions());
-		newMedication.setWritingDateTime(entity.getWritingDateTime());
 		return newMedication; 
 	}
 

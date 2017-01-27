@@ -48,6 +48,11 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 	    return findByCriteria();  
 	}  
 	
+	public T findById(long Id) {
+		Session session = SessionUtil.getSession();
+	    return session.load(getPersistentClass(), Id);  
+	}
+	
 	
 	/*
 	 * Muss überschrieben werden;

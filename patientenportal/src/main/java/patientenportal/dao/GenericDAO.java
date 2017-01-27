@@ -15,7 +15,9 @@ public interface GenericDAO<T, ID extends Serializable> {
 	public List<T> getAll();
 	
 	public List<T> findByCriteria(Criterion... criterion);
-	  
+	
+	public T findById(long Id);
+	
 	public List<T> findByDetachedCriteria(DetachedCriteria crit);
 	
 	public void addEntity(T entity);
