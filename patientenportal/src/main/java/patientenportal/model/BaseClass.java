@@ -10,10 +10,9 @@ import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Fetch;
-<<<<<<< HEAD
+
 import org.hibernate.annotations.FetchMode;
-=======
->>>>>>> 5e38aabae8e87022f9e79243ce0ced1278eb6366
+
 
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
