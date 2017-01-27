@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response.Status;
 
 import patientenportal.dao.CaseFileDAOImpl;
 import patientenportal.dao.DoctorDAOImpl;
+import patientenportal.dao.MedicationPrescriptionDAOImpl;
 import patientenportal.dao.PatientDAOImpl;
 import patientenportal.dao.PatientFileDAOImpl;
 import patientenportal.dao.RelativeDAOImpl;
@@ -16,6 +17,7 @@ import patientenportal.dao.WebSessionDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.CaseFile;
 import patientenportal.model.Doctor;
+import patientenportal.model.MedicationPrescription;
 import patientenportal.model.Patient;
 import patientenportal.model.PatientFile;
 import patientenportal.model.Relative;
@@ -46,7 +48,6 @@ public class FirstTableCreationService {
 			DoctorDAOImpl drdao = new DoctorDAOImpl();
 			TreatmentDAOImpl tdao = new TreatmentDAOImpl();
 			
-			
 			User admin = userdao.addEntityAndReturn(newUser("Admin", "Admin", "Herr", "admin@admin.de", "admin", "admin"));
 			User haku = userdao.addEntityAndReturn(newUser("haku", "haku", "Herr", "haku@haku.de", "haku", "haku"));
 			User maxmustermann = userdao.addEntityAndReturn(newUser("Max", "Mustermann", "Herr", "m.m@test.de", "max", "max"));
@@ -62,24 +63,43 @@ public class FirstTableCreationService {
 			pmax.setPatientFile(pfmax);
 			pfmax.setPatient(pmax);
 			pfdao.updateEntity(pfmax);
+			pmax.setUser(maxmustermann);
+			pdao.updateEntity(pmax);
 			maxmustermann.addUserRole(pmax);
+			maxmustermann.setActiveUserRole(pmax);
 			
 			Patient pmia = pdao.addEntityAndReturn(new Patient());
 			PatientFile pfmia = pfdao.addEntityAndReturn(new PatientFile());
 			pmia.setPatientFile(pfmia);
 			pfmia.setPatient(pmia);
 			pfdao.updateEntity(pfmia);
+			pmia.setUser(miamusterfrau);
+			pdao.updateEntity(pmia);
 			miamusterfrau.addUserRole(pmia);
+			miamusterfrau.setActiveUserRole(pmia);
 			
 			
 			//Doktoren anlegen
 			Doctor drcoxdoctor = drdao.addEntityAndReturn(new Doctor()); 
 			drcox.addUserRole(drcoxdoctor);
-			drhouse.addUserRole(drdao.addEntityAndReturn(new Doctor()));
-			drfrankenstein.addUserRole(drdao.addEntityAndReturn(new Doctor()));
+			drcox.setActiveUserRole(drcoxdoctor);
+			drdao.updateEntity(drcoxdoctor);
+			
+			Doctor drhousedoctor = drdao.addEntityAndReturn(new Doctor());
+			drhouse.addUserRole(drhousedoctor);
+			drhouse.setActiveUserRole(drhousedoctor);
+			drdao.updateEntity(drhousedoctor);
+			
+			Doctor drfrankensteindoctor = drdao.addEntityAndReturn(new Doctor());
+			drfrankenstein.addUserRole(drfrankensteindoctor);
+			drfrankenstein.setActiveUserRole(drfrankensteindoctor);
+			drdao.updateEntity(drfrankensteindoctor);
 			
 			//Oma erna ist Angehörige
-			omaerna.addUserRole(rdao.addEntityAndReturn(new Relative()));
+			Relative romaerna = rdao.addEntityAndReturn(new Relative());
+			omaerna.addUserRole(romaerna);
+			omaerna.setActiveUserRole(romaerna);
+			rdao.updateEntity(romaerna);
 			
 			//Behandlungsfälle anlegen
 			CaseFile c1 = cdao.addEntityAndReturn(new CaseFile());
@@ -107,6 +127,25 @@ public class FirstTableCreationService {
 			
 			c3.addTreatment(tkeuchhusten);
 			cdao.updateEntity(c3);
+			
+			Treatment tstrahlung = tdao.addEntityAndReturn(new Treatment());
+			tstrahlung.setDescription("Chemotherapie");
+			tstrahlung.setDoctor(drhousedoctor);
+			tdao.updateEntity(tstrahlung);
+			
+			c1.addTreatment(tstrahlung);
+			cdao.updateEntity(c1);
+			
+			Treatment tinsulin = tdao.addEntityAndReturn(new Treatment());
+			tinsulin.setDescription("Insulinbehandlung");
+			tinsulin.setDoctor(drhousedoctor);
+			tdao.updateEntity(tinsulin);
+			
+			c2.addTreatment(tinsulin);
+			cdao.updateEntity(c2);
+			
+			//Medikamentenverschreibung Insulin
+			//MedicationPrescription
 			
 			
 			userdao.updateEntity(maxmustermann);

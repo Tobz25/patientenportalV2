@@ -92,6 +92,14 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 	    session.close();
 	}  
 	
+	public void deleteEntity(long id) {
+		Session session = SessionUtil.getSession();
+		Transaction tx = startTA(session);
+	    session.delete(session.load(persistentClass, id));  
+	    tx.commit();
+	    session.close();
+	}
+	
 	public Transaction startTA(Session session) {
 		return session.beginTransaction();
 	}
