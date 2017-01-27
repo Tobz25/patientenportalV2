@@ -13,6 +13,7 @@ import patientenportal.dao.MedicationIntakeDAOImpl;
 import patientenportal.dao.MedicationPrescriptionDAOImpl;
 import patientenportal.dao.PatientDAOImpl;
 import patientenportal.dao.PatientFileDAOImpl;
+import patientenportal.dao.PermissionDAOImpl;
 import patientenportal.dao.RelativeDAOImpl;
 import patientenportal.dao.TreatmentDAOImpl;
 import patientenportal.dao.UserDAOImpl;
@@ -25,6 +26,8 @@ import patientenportal.model.MedicationIntake;
 import patientenportal.model.MedicationPrescription;
 import patientenportal.model.Patient;
 import patientenportal.model.PatientFile;
+import patientenportal.model.Permission;
+import patientenportal.model.PermissionType;
 import patientenportal.model.Relative;
 import patientenportal.model.Treatment;
 import patientenportal.model.User;
@@ -55,14 +58,14 @@ public class FirstTableCreationService {
 			MedicationPrescriptionDAOImpl mpdao = new MedicationPrescriptionDAOImpl();
 			MedicationDAOImpl mdao = new MedicationDAOImpl();
 			MedicationIntakeDAOImpl mindao = new MedicationIntakeDAOImpl();
-			
+			PermissionDAOImpl permdao = new PermissionDAOImpl();
 			
 			User admin = userdao.addEntityAndReturn(newUser("Admin", "Admin", "Herr", "admin@admin.de", "admin", "admin"));
 			User haku = userdao.addEntityAndReturn(newUser("haku", "haku", "Herr", "haku@haku.de", "haku", "haku"));
 			User maxmustermann = userdao.addEntityAndReturn(newUser("Max", "Mustermann", "Herr", "m.m@test.de", "max", "max"));
 			User miamusterfrau = userdao.addEntityAndReturn(newUser("Mia", "Musterfrau", "Frau", "mia.m@test.de", "mia", "mia"));
 			User drcox = userdao.addEntityAndReturn(newUser("Percival", "Cox", "Herr Dr", "p@cox.de", "pcox", "flachzange"));
-			User drhouse = userdao.addEntityAndReturn(newUser("Gregory", "House", "Herr Dr", "g.house@test.de", "ghouse", "1234456789"));
+			User drhouse = userdao.addEntityAndReturn(newUser("Gregory", "House", "Herr Dr", "g.house@test.de", "ghouse", "123456789"));
 			User drfrankenstein = userdao.addEntityAndReturn(newUser("Michael", "Frankenstein", "Herr Dr", "m@frankenstein.de", "mfrankenstein", "password"));
 			User omaerna = userdao.addEntityAndReturn(newUser("Erna", "Müller", "Frau Oma", "erna@oma.de", "omaerna", "meinpassword"));
 			
@@ -108,6 +111,7 @@ public class FirstTableCreationService {
 			Relative romaerna = rdao.addEntityAndReturn(new Relative());
 			omaerna.addUserRole(romaerna);
 			omaerna.setActiveUserRole(romaerna);
+			
 			rdao.updateEntity(romaerna);
 			
 			//Behandlungsfälle anlegen
@@ -187,6 +191,39 @@ public class FirstTableCreationService {
 			tinsulin.addMedicationIntake(min);
 			mindao.updateEntity(min);
 			tdao.updateEntity(tinsulin);
+			
+			//Zugriffsberechtigungen 
+				//für Nutzer Max an sich selbst WRITE
+			Permission p1 = permdao.addEntityAndReturn(new Permission());
+			p1.setPermissionType(PermissionType.WRITE);
+			p1.addUserGroup(pmax);
+			p1.addElements(pfmax);
+			p1.addElements(c1);
+			p1.addElements(c2);
+			p1.addElements(tstrahlung);
+
+			pdao.updateEntity(pmax);
+			pfdao.updateEntity(pfmax);
+			cdao.updateEntity(c1);
+			cdao.updateEntity(c2);
+			tdao.updateEntity(tstrahlung);
+			permdao.updateEntity(p1);
+			
+				//für Nutzer Mia
+			Permission p2 = permdao.addEntityAndReturn(new Permission());
+			p2.setPermissionType(PermissionType.WRITE);
+			p2.addUserGroup(pmia);
+			p2.addElements(pfmia);
+			p2.addElements(c3);
+			p2.addElements(tinsulin);
+
+			pdao.updateEntity(pmax);
+			pfdao.updateEntity(pfmax);
+			cdao.updateEntity(c3);
+			tdao.updateEntity(tinsulin);
+			permdao.updateEntity(p2);
+
+			
 			
 			userdao.updateEntity(maxmustermann);
 			userdao.updateEntity(miamusterfrau);
