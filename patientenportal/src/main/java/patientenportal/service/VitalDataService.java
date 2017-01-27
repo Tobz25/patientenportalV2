@@ -5,6 +5,7 @@ import java.util.List;
 import patientenportal.dao.UserDAOImpl;
 import patientenportal.dao.VitalDateDAOImpl;
 import patientenportal.helper.DataNotFoundException;
+import patientenportal.model.User;
 import patientenportal.model.VitalDate;
 
 public class VitalDataService {
@@ -35,7 +36,7 @@ public class VitalDataService {
 		return newVitalDate;
 	}
 	
-	public VitalDate deleteVitalDate(long VitalDataId) {
+	public void deleteVitalDate(long VitalDataId) {
 		VitalDateDAOImpl vdi = new VitalDateDAOImpl();
 		List<VitalDate> allVitalDate = vdi.getAll();
 		for (VitalDate vt : allVitalDate){
@@ -43,6 +44,5 @@ public class VitalDataService {
 				vdi.deleteEntity(vt);	
 			}
 		}
-		throw new DataNotFoundException("No Vital Data found for id " + VitalDataId);
 	}
 }

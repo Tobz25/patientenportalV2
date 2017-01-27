@@ -48,6 +48,11 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 	    return findByCriteria();  
 	}  
 	
+	public T findById(long Id) {
+		Session session = SessionUtil.getSession();
+	    return session.load(getPersistentClass(), Id);  
+	}
+	
 	
 	/*
 	 * Muss überschrieben werden;
@@ -91,6 +96,14 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 	    tx.commit();
 	    session.close();
 	}  
+	
+	public void deleteEntity(long id) {
+		Session session = SessionUtil.getSession();
+		Transaction tx = startTA(session);
+	    session.delete(session.load(persistentClass, id));  
+	    tx.commit();
+	    session.close();
+	}
 	
 	public Transaction startTA(Session session) {
 		return session.beginTransaction();

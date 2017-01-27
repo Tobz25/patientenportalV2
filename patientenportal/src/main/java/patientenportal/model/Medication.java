@@ -32,10 +32,6 @@ public class Medication extends BaseClass{
 	private String drug;
 	
 	
-	@Column(name="startdatetime", columnDefinition="DATETIME")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date writingDateTime;
-	
 	@Override
 	public boolean equals(Object obj) {
 		return true; //(obj == this) || (obj instanceof Medication) && Id != null && Id.equals(((Medication) obj).getId());
@@ -70,14 +66,4 @@ public class Medication extends BaseClass{
 	public void setDrug(String drug) {
 		this.drug = drug;
 	}
-
-	
-	public Date getWritingDateTime() {
-		return this.writingDateTime;
-	}
-
-	public void setWritingDateTime(Date datetime) {
-		this.writingDateTime = datetime;
-	}
-	
 }

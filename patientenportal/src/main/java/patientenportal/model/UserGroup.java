@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity(name="USERGROUP")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name="baseclass_id")
 public class UserGroup extends BaseClass {
 

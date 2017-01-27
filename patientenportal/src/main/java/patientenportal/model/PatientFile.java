@@ -17,7 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @XmlRootElement
-@Entity(name="patienfile")
+@Entity(name="patientfile")
 @PrimaryKeyJoinColumn(name="baseclass_id")
 public class PatientFile extends BaseClass{
 	

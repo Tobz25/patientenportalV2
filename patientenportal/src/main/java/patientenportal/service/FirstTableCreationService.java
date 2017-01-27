@@ -1,5 +1,6 @@
 package patientenportal.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -7,6 +8,9 @@ import javax.ws.rs.core.Response.Status;
 
 import patientenportal.dao.CaseFileDAOImpl;
 import patientenportal.dao.DoctorDAOImpl;
+import patientenportal.dao.MedicationDAOImpl;
+import patientenportal.dao.MedicationIntakeDAOImpl;
+import patientenportal.dao.MedicationPrescriptionDAOImpl;
 import patientenportal.dao.PatientDAOImpl;
 import patientenportal.dao.PatientFileDAOImpl;
 import patientenportal.dao.RelativeDAOImpl;
@@ -16,6 +20,9 @@ import patientenportal.dao.WebSessionDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.CaseFile;
 import patientenportal.model.Doctor;
+import patientenportal.model.Medication;
+import patientenportal.model.MedicationIntake;
+import patientenportal.model.MedicationPrescription;
 import patientenportal.model.Patient;
 import patientenportal.model.PatientFile;
 import patientenportal.model.Relative;
@@ -45,6 +52,9 @@ public class FirstTableCreationService {
 			RelativeDAOImpl rdao = new RelativeDAOImpl();
 			DoctorDAOImpl drdao = new DoctorDAOImpl();
 			TreatmentDAOImpl tdao = new TreatmentDAOImpl();
+			MedicationPrescriptionDAOImpl mpdao = new MedicationPrescriptionDAOImpl();
+			MedicationDAOImpl mdao = new MedicationDAOImpl();
+			MedicationIntakeDAOImpl mindao = new MedicationIntakeDAOImpl();
 			
 			
 			User admin = userdao.addEntityAndReturn(newUser("Admin", "Admin", "Herr", "admin@admin.de", "admin", "admin"));
@@ -62,6 +72,8 @@ public class FirstTableCreationService {
 			pmax.setPatientFile(pfmax);
 			pfmax.setPatient(pmax);
 			pfdao.updateEntity(pfmax);
+			pmax.setUser(maxmustermann);
+			pdao.updateEntity(pmax);
 			maxmustermann.addUserRole(pmax);
 			maxmustermann.setActiveUserRole(pmax);
 			
@@ -70,6 +82,8 @@ public class FirstTableCreationService {
 			pmia.setPatientFile(pfmia);
 			pfmia.setPatient(pmia);
 			pfdao.updateEntity(pfmia);
+			pmia.setUser(miamusterfrau);
+			pdao.updateEntity(pmia);
 			miamusterfrau.addUserRole(pmia);
 			miamusterfrau.setActiveUserRole(pmia);
 			
@@ -78,18 +92,23 @@ public class FirstTableCreationService {
 			Doctor drcoxdoctor = drdao.addEntityAndReturn(new Doctor()); 
 			drcox.addUserRole(drcoxdoctor);
 			drcox.setActiveUserRole(drcoxdoctor);
+			drdao.updateEntity(drcoxdoctor);
+			
 			Doctor drhousedoctor = drdao.addEntityAndReturn(new Doctor());
 			drhouse.addUserRole(drhousedoctor);
 			drhouse.setActiveUserRole(drhousedoctor);
+			drdao.updateEntity(drhousedoctor);
 			
 			Doctor drfrankensteindoctor = drdao.addEntityAndReturn(new Doctor());
 			drfrankenstein.addUserRole(drfrankensteindoctor);
 			drfrankenstein.setActiveUserRole(drfrankensteindoctor);
+			drdao.updateEntity(drfrankensteindoctor);
 			
 			//Oma erna ist Angehörige
 			Relative romaerna = rdao.addEntityAndReturn(new Relative());
 			omaerna.addUserRole(romaerna);
 			omaerna.setActiveUserRole(romaerna);
+			rdao.updateEntity(romaerna);
 			
 			//Behandlungsfälle anlegen
 			CaseFile c1 = cdao.addEntityAndReturn(new CaseFile());
@@ -118,6 +137,56 @@ public class FirstTableCreationService {
 			c3.addTreatment(tkeuchhusten);
 			cdao.updateEntity(c3);
 			
+			Treatment tstrahlung = tdao.addEntityAndReturn(new Treatment());
+			tstrahlung.setDescription("Chemotherapie");
+			tstrahlung.setDoctor(drhousedoctor);
+			tdao.updateEntity(tstrahlung);
+			
+			c1.addTreatment(tstrahlung);
+			cdao.updateEntity(c1);
+			
+			Treatment tinsulin = tdao.addEntityAndReturn(new Treatment());
+			tinsulin.setDescription("Insulinbehandlung");
+			tinsulin.setDoctor(drhousedoctor);
+			Calendar caltins = Calendar.getInstance();
+			caltins.add(Calendar.DATE, -12);
+			tinsulin.setStartDateTime(caltins.getTime());
+			c2.addTreatment(tinsulin);
+			
+			tdao.updateEntity(tinsulin);
+			cdao.updateEntity(c2);
+			
+			//Medikamentenverschreibung Insulin
+				//Medikation
+				Medication insulin = mdao.addEntityAndReturn(new Medication());
+				insulin.setDrug("Insulin");
+				insulin.setDescription("Insulin; Hergestellt von Bayer");
+				mdao.updateEntity(insulin);
+			
+			MedicationPrescription mp = mpdao.addEntityAndReturn(new MedicationPrescription());
+			mp.setDoctor(drhousedoctor);
+			mp.setDescription("2x Insulin pro Woche");
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -7);
+			mp.setWritingDateTime(cal.getTime());
+			mp.addMedication(insulin);
+			insulin.addPrescription(mp);
+			tinsulin.addPrescription(mp);
+			mpdao.updateEntity(mp);
+			tdao.updateEntity(tinsulin);
+			mdao.updateEntity(insulin);
+			
+			MedicationIntake min = mindao.addEntityAndReturn(new MedicationIntake());
+			Calendar cal2 = Calendar.getInstance();
+			cal2.add(Calendar.DATE, -3);
+			min.setDateTime(cal2.getTime());
+			min.setDescription("Einnahme von vorvorgestern. 3x genommen, Blutzucker nicht schlecht");
+			min.setDrug("Insulin");
+			min.setPrescription(mp);
+			
+			tinsulin.addMedicationIntake(min);
+			mindao.updateEntity(min);
+			tdao.updateEntity(tinsulin);
 			
 			userdao.updateEntity(maxmustermann);
 			userdao.updateEntity(miamusterfrau);
