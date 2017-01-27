@@ -71,9 +71,9 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
     private void checkPermissions(List<Role> allowedRoles) throws Exception {
     	if(allowedRoles.size()==0){
-    		return
+    		return;
     	}
-    	else if()
+    	else if(re)
         // Check if the user contains one of the allowed roles
         // Throw an Exception if the user has not permission to execute the method
     }
