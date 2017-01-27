@@ -39,7 +39,7 @@ public class MyResource {
     	result.append("Bearer für Nutzer: " + username + "\n");
     	result.append("----------------------" + "\n");
     	result.append("Got it!");
-        result.append("Ergebnis anlegen: " + String.valueOf(s.FirstAttempt()));
+        //result.append("Ergebnis anlegen: " + String.valueOf(s.FirstAttempt()));
     	return result.toString();
     }
 }
