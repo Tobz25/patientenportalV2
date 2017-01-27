@@ -43,8 +43,8 @@ public class VitalDataEndpoint {
 	}
 	
 	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	public VitalDate deleteVitalDateById(@PathParam("VitalDataId") long VitalDataId){
-		return VitalDataService.deleteVitalDate(VitalDataId);		
+	@Path("/{VitalDataId}")
+	public void deleteVitalDateById(@PathParam("VitalDataId") long VitalDataId){
+		VitalDataService.deleteVitalDate(VitalDataId);		
 	}
 }
