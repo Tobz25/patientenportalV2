@@ -15,6 +15,7 @@ import javax.ws.rs.ext.Provider;
 import patientenportal.helper.Secured;
 import patientenportal.model.User;
 import patientenportal.service.AuthenticationService;
+import patientenportal.service.SessionService;
 
 @Secured
 @Provider
@@ -22,7 +23,9 @@ import patientenportal.service.AuthenticationService;
 public class AuthenticationFilter implements ContainerRequestFilter{
 	
 	AuthenticationService authService = new AuthenticationService();
-
+	SessionService sservice = new SessionService();
+	
+	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {			
 			// Get the HTTP Authorization header from the request
@@ -31,6 +34,10 @@ public class AuthenticationFilter implements ContainerRequestFilter{
 	        
 	     // Check if the HTTP Authorization header is present and formatted correctly
 	        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+	        	
+	        	//abgelaufene Tokens werden gelöscht
+	        	sservice.deleteInvalidTokens();
+	        	
 	        	// Extract the token from the HTTP Authorization header
 	        	String token = authorizationHeader.substring("Bearer".length()).trim();
 	        	if (validateToken(token) == true){
@@ -53,7 +60,9 @@ public class AuthenticationFilter implements ContainerRequestFilter{
 		if (authenticated == false){
     		return false;
     	}
-		else return true;
+		else {
+			return true;
+		}
 	}
 
 }

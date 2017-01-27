@@ -9,6 +9,7 @@ public class WebSessionDAOImpl extends GenericDAOImpl<WebSession, Long> {
 		WebSession ws = new WebSession();
 		ws.setUser(entity.getUser());
 		ws.setToken(entity.getToken());
+		ws.setValidTill(entity.getValidTill());
 		return ws;
 	}
 }

@@ -31,10 +31,11 @@ public class SessionService {
 		return new BigInteger(130, random).toString(32);
 	}
 
-	public void deleteUnvalidTokens() {
+	public void deleteInvalidTokens() {
 		WebSessionDAOImpl wsdi = new WebSessionDAOImpl();
-		List<WebSession> invalidSessions = wsdi.findByCriteria(
-				Restrictions.ge("validtill", Calendar.getInstance().getTime()));
+		List<WebSession> invalidSessions = wsdi.findByCriteria(Restrictions.or(
+				Restrictions.isNull("validtill"),
+				Restrictions.le("validtill", Calendar.getInstance().getTime())));
 		for(WebSession ws: invalidSessions) {
 			wsdi.deleteEntity(ws);
 		}

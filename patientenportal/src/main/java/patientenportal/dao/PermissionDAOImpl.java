@@ -38,7 +38,7 @@ public class PermissionDAOImpl extends GenericDAOImpl<Permission, Long>{
 		c.add(Restrictions.eq("e.id", entity.getId()));
 		c.createAlias("usergroups", "u");
 		c.add(Restrictions.eq("u.id", user.getId()));
-		c.add(Restrictions.eq("permissionType", PermissionType.READ));
+		c.add(Restrictions.or(Restrictions.eq("permissionType", PermissionType.READ), Restrictions.eq("permissionType", PermissionType.WRITE)));
 		List<Permission> perm = findByDetachedCriteria(c);
 		
 		return perm.size() == 1;
