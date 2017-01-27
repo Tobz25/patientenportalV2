@@ -63,6 +63,7 @@ public class FirstTableCreationService {
 			pfmax.setPatient(pmax);
 			pfdao.updateEntity(pfmax);
 			maxmustermann.addUserRole(pmax);
+			maxmustermann.setActiveUserRole(pmax);
 			
 			Patient pmia = pdao.addEntityAndReturn(new Patient());
 			PatientFile pfmia = pfdao.addEntityAndReturn(new PatientFile());
@@ -70,16 +71,25 @@ public class FirstTableCreationService {
 			pfmia.setPatient(pmia);
 			pfdao.updateEntity(pfmia);
 			miamusterfrau.addUserRole(pmia);
+			miamusterfrau.setActiveUserRole(pmia);
 			
 			
 			//Doktoren anlegen
 			Doctor drcoxdoctor = drdao.addEntityAndReturn(new Doctor()); 
 			drcox.addUserRole(drcoxdoctor);
-			drhouse.addUserRole(drdao.addEntityAndReturn(new Doctor()));
-			drfrankenstein.addUserRole(drdao.addEntityAndReturn(new Doctor()));
+			drcox.setActiveUserRole(drcoxdoctor);
+			Doctor drhousedoctor = drdao.addEntityAndReturn(new Doctor());
+			drhouse.addUserRole(drhousedoctor);
+			drhouse.setActiveUserRole(drhousedoctor);
+			
+			Doctor drfrankensteindoctor = drdao.addEntityAndReturn(new Doctor());
+			drfrankenstein.addUserRole(drfrankensteindoctor);
+			drfrankenstein.setActiveUserRole(drfrankensteindoctor);
 			
 			//Oma erna ist Angehörige
-			omaerna.addUserRole(rdao.addEntityAndReturn(new Relative()));
+			Relative romaerna = rdao.addEntityAndReturn(new Relative());
+			omaerna.addUserRole(romaerna);
+			omaerna.setActiveUserRole(romaerna);
 			
 			//Behandlungsfälle anlegen
 			CaseFile c1 = cdao.addEntityAndReturn(new CaseFile());
