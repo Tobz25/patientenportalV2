@@ -26,6 +26,8 @@ public interface GenericDAO<T, ID extends Serializable> {
 	  
 	public void deleteEntity(T entity);  
 	
+	public void deleteEntity(long id);  
+	
 	
 
 }  
