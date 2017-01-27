@@ -8,18 +8,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import patientenportal.helper.MySecurityContext;
 import patientenportal.helper.Secured;
+import patientenportal.service.DoctorService;
+import patientenportal.service.FirstTableCreationService;
+
 import javax.ws.rs.core.SecurityContext;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Secured
 @Path("myresource")
 public class MyResource {
-	@Context
-	SecurityContext securityContext;
-
+	FirstTableCreationService s = new FirstTableCreationService();
+	
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
@@ -29,9 +31,15 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-    	Principal user = securityContext.getUserPrincipal();
-    	String username = user.getName();
-    	System.out.println(username);
-        return "Got it!";
+    	//Principal user = ((MySecurityContext)securityContext).getUserPrincipal();
+    	String username = "Hagen"; //user.getName();
+    	System.out.println("Nutzername: " + username);
+    	StringBuilder result = new StringBuilder();
+    	result.append("MyResource aufgerufen.\n ");
+    	result.append("Bearer für Nutzer: " + username + "\n");
+    	result.append("----------------------" + "\n");
+    	result.append("Got it!");
+        result.append("Ergebnis anlegen: " + String.valueOf(s.FirstAttempt()));
+    	return result.toString();
     }
 }
