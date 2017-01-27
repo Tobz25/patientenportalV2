@@ -2,7 +2,9 @@ package patientenportal.resource;
 
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import patientenportal.helper.Secured;
 import patientenportal.model.MedicalDocument;
+import patientenportal.model.VitalDate;
 import patientenportal.service.MedicalDocumentService;
 
 
@@ -31,5 +34,15 @@ public class MedicalDocumentEndpoint {
 	@Path("/{MedicalDocumentId}")
 	public MedicalDocument getMedicalDocumentById(@PathParam("MedicalDocumentId") long MedicalDocumentId) {
 		return MedicalDocumentService.getMedicalDocumentById(MedicalDocumentId);
+	}
+	
+	@POST
+	public MedicalDocument addMedicalDocument(MedicalDocument MedicalDocument) {
+		return MedicalDocumentService.addMedicalDocument(MedicalDocument);
+	}
+	
+	@DELETE
+	public MedicalDocument deleteMedicalDocumentById(@PathParam("MedicalDocumentId") long MedicalDocumentId){
+		return MedicalDocumentService.deleteMedicalDocumentById(MedicalDocumentId);
 	}
 }
