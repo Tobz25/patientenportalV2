@@ -18,7 +18,6 @@ public class VitalDataService {
 		throw new DataNotFoundException("No Vital Data found");
 	}
 	
-	
 	public VitalDate getVitalDataById(long VitalDataId) {
 		VitalDateDAOImpl vdi = new VitalDateDAOImpl();
 		List<VitalDate> VitalData = vdi.getAll();
@@ -30,10 +29,20 @@ public class VitalDataService {
 		throw new DataNotFoundException("No Vital Data found for id " + VitalDataId);
 	}
 
-	/*
-	public VitalDate addVitalDate(VitalDate vitalDate) {
+	public VitalDate addVitalDate(VitalDate VitalDate) {
 		VitalDateDAOImpl vdi = new VitalDateDAOImpl();
-		vdi.addEntity(vitalDate);
-		return null;
-	}*/
+		VitalDate newVitalDate = vdi.addEntityAndReturn(VitalDate);
+		return newVitalDate;
+	}
+	
+	public VitalDate deleteVitalDate(long VitalDataId) {
+		VitalDateDAOImpl vdi = new VitalDateDAOImpl();
+		List<VitalDate> allVitalDate = vdi.getAll();
+		for (VitalDate vt : allVitalDate){
+			if (vt.getId() == VitalDataId){
+				vdi.deleteEntity(vt);	
+			}
+		}
+		throw new DataNotFoundException("No Vital Data found for id " + VitalDataId);
+	}
 }
