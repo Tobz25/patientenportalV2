@@ -77,7 +77,7 @@ public class PatientFileEndpoint {
 								  @QueryParam("user") long userId,
 								  @QueryParam("permission") String permission){
 		PatientFile patientFile = patientFileService.getPatientFileById(patientFileId);
-		return permissionService.addPermission(patientFile, userId, permission);
+		return Response.ok().build();//permissionService.addPermission(patientFile, userId, permission);
 	}
 
 	@Path("/{patientFileId}/documents")

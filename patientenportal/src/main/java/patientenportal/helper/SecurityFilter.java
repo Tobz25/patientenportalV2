@@ -37,9 +37,8 @@ public class SecurityFilter implements ContainerRequestFilter{
 	        		
 	        		//Get the user by this token
 	    	        User user = authService.getUserByToken(token);
+	    	        System.out.println("Nutzer: " + user.toString());
 	    	        requestContext.setSecurityContext(new MySecurityContext(user));
-	    	        
-	    	        
 	    	        return;
 	        	}
 	        }

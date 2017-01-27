@@ -45,9 +45,10 @@ public class TreatmentEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Treatment addTreatment(Treatment treatment, @Context SecurityContext securityContext){
 		MySecurityContext context = (MySecurityContext) securityContext;
-		if (permissionService.checkWritePermission(context.getUserId(), treatment.getCaseFile().getId()))
-			return treatmentService.addTreatment(treatment);
-		else throw new UnauthorizedException("User has no permission to add a treatment");
+		return null;
+		//if (permissionService.checkWritePermission(context.getUserId(), treatment.getCaseFile().getId()))
+			//return treatmentService.addTreatment(treatment);
+		//else throw new UnauthorizedException("User has no permission to add a treatment");
 	}
 	
 	@PUT
