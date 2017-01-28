@@ -3,6 +3,7 @@ package patientenportal.resource;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -35,10 +36,15 @@ public class VitalDataEndpoint {
 		return VitalDataService.getVitalDataById(VitalDataId);
 	}
 	
-	/*
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public VitalDate addVitalDate(VitalDate VitalDate){
 		return VitalDataService.addVitalDate(VitalDate);		
-	}*/
+	}
+	
+	@DELETE
+	@Path("/{VitalDataId}")
+	public void deleteVitalDateById(@PathParam("VitalDataId") long VitalDataId){
+		VitalDataService.deleteVitalDate(VitalDataId);		
+	}
 }

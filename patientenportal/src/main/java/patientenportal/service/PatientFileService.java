@@ -16,10 +16,9 @@ public class PatientFileService {
 	 */ 
 	public PatientFile getPatientFile(long patientId){
 		PatientDAOImpl pdi = new PatientDAOImpl();
-		
-		
+				
 		List<Patient> patients = pdi.findByCriteria(Restrictions.eq("id", patientId));
-		if (patients.size() == 0) throw new DataNotFoundException("No patient file found for id " + patientId);
+		if (patients.size() == 0) throw new DataNotFoundException("No patient file found for user with id " + patientId);
 		
 		return patients.get(0).getPatientFile();
 		/*List<Patient> patients = pdi.getAll();

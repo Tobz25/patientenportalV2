@@ -15,14 +15,17 @@ import javax.ws.rs.ext.Provider;
 import patientenportal.helper.Secured;
 import patientenportal.model.User;
 import patientenportal.service.AuthenticationService;
+import patientenportal.service.SessionService;
 
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class SecurityFilter implements ContainerRequestFilter{
+public class AuthenticationFilter implements ContainerRequestFilter{
 	
 	AuthenticationService authService = new AuthenticationService();
-
+	SessionService sservice = new SessionService();
+	
+	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {			
 			// Get the HTTP Authorization header from the request
@@ -31,26 +34,23 @@ public class SecurityFilter implements ContainerRequestFilter{
 	        
 	     // Check if the HTTP Authorization header is present and formatted correctly
 	        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+	        	
+	        	//abgelaufene Tokens werden gelöscht
+	        	sservice.deleteInvalidTokens();
+	        	
 	        	// Extract the token from the HTTP Authorization header
 	        	String token = authorizationHeader.substring("Bearer".length()).trim();
 	        	if (validateToken(token) == true){
 	        		
 	        		//Get the user by this token
 	    	        User user = authService.getUserByToken(token);
+	    	        System.out.println("Nutzer: " + user.toString());
 	    	        requestContext.setSecurityContext(new MySecurityContext(user));
-	    	        
-	    	        
 	    	        return;
 	        	}
 	        }
-
 	        
-	        Response unauthorizedStatus = Response
-					.status(Response.Status.UNAUTHORIZED)
-					.entity("User cannot access the resource.")
-					.build();
-
-	        requestContext.abortWith(unauthorizedStatus);
+	        throw new UnauthorizedException("Client has to be logged in to access the ressource");
 	        
 		
 	}
@@ -60,7 +60,9 @@ public class SecurityFilter implements ContainerRequestFilter{
 		if (authenticated == false){
     		return false;
     	}
-		else return true;
+		else {
+			return true;
+		}
 	}
 
 }

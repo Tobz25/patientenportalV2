@@ -4,7 +4,10 @@ import java.security.Principal;
 
 import javax.ws.rs.core.SecurityContext;
 
+import patientenportal.model.Doctor;
+import patientenportal.model.Role;
 import patientenportal.model.User;
+import patientenportal.model.UserGroup;
 
 public class MySecurityContext implements SecurityContext{
 	private final User user;
@@ -15,15 +18,7 @@ public class MySecurityContext implements SecurityContext{
 
     @Override
     public Principal getUserPrincipal() {
-        /*return new Principal() {
-            @Override
-            public String getName() {
-                return user.getUsername();
-            }
-        	return this.user;
-            
-        };*/
-        return this.user;
+    	return this.user;
     }
     
     public long getUserId(){
@@ -44,6 +39,11 @@ public class MySecurityContext implements SecurityContext{
 
 	@Override
 	public boolean isUserInRole(String arg0) {
+		Role userrole;
+		UserGroup group = user.getActiveUserRole();
+		if(group instanceof Doctor) {
+			userrole = Role.Doctor;
+		}
 		// TODO Auto-generated method stub
 		return false;
 	}

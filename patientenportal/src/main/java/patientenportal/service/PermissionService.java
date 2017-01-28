@@ -1,33 +1,22 @@
 package patientenportal.service;
 
-<<<<<<< HEAD
-import javax.persistence.Entity;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import patientenportal.model.User;
-
-public class PermissionService {
-	
-	public Response setPermission(Entity entity, long userId, String permission){
-		return Response.status(Status.OK).build();
-	}
-	
-	public String getPermission(Entity entity, long userId){
-		return "permission";
-	}
-
-}
-=======
 import java.util.List;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.CriteriaQuery;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.engine.spi.TypedValue;
 
+import patientenportal.dao.BaseClassDAOImpl;
 import patientenportal.dao.PermissionDAOImpl;
 import patientenportal.dao.UserDAOImpl;
+import patientenportal.dao.UserGroupDAOImpl;
 import patientenportal.dao.WebSessionDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.BaseClass;
@@ -42,19 +31,30 @@ public class PermissionService {
 	
 	public boolean checkReadPermission(UserGroup loggedInUser, BaseClass entity){
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
-		List<Permission> perm = pdao.findByCriteria(Restrictions.and(Restrictions.eq("usergroup_id", loggedInUser.getId()),
-				Restrictions.and(Restrictions.eq("element_id", entity.getId())), Restrictions.eq("permissiontype", PermissionType.READ.toString())));
 		
-		return perm.size() == 1;
+		return pdao.checkReadPermission(loggedInUser, entity);
 	}
 	public boolean checkWritePermission(UserGroup loggedInUser, BaseClass entity) {
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
-		List<Permission> perm = pdao.findByCriteria(Restrictions.and(Restrictions.eq("usergroup_id", loggedInUser.getId()),
-				Restrictions.and(Restrictions.eq("element_id", entity.getId())), Restrictions.eq("permissiontype", PermissionType.WRITE.toString())));
 		
-		return perm.size() == 1;
+		return pdao.checkWritePermission(loggedInUser, entity);
 	}
 	
+	
+	public boolean checkReadPermission(long usergroupID, long classId) {
+		UserGroupDAOImpl udao = new UserGroupDAOImpl();
+		//List<UserGroup> users = udao.findByCriteria(Restrictions.eq("baseclass_id", usergroupID));
+		UserGroup group = udao.findById(usergroupID);
+		
+		if (group == null) return false;//throw new Exception(hat den nutzer nicht gefunden);
+		
+		BaseClassDAOImpl bdao = new BaseClassDAOImpl();
+		
+		BaseClass classes = bdao.findById(classId);
+		if (classes == null) return false; //throw new Exception(hat den baseclass nicht gefunden);
+		
+		return checkReadPermission(group, classes);
+	}
 	
 	public Response addPermission(BaseClass entity, Patient patient, UserGroup userGroup, PermissionType type) {
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
@@ -67,4 +67,3 @@ public class PermissionService {
 	}
 
 }
->>>>>>> 7087fc0d92f752685ee454cbf7aae1a8101a2f4e

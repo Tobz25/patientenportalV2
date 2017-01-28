@@ -3,9 +3,17 @@ package patientenportal.model;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.Fetch;
+
+import org.hibernate.annotations.FetchMode;
+
+
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +28,8 @@ public class BaseClass {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	
+	@Fetch(FetchMode.JOIN)
 	@ManyToMany(mappedBy="elements")
 	private Set<Permission> permissons;
 	
@@ -35,6 +45,7 @@ public class BaseClass {
 		this.id = id;
 	}
 	
+	@XmlTransient
 	public Set<Permission> getPermissions() {
 		return this.permissons;
 	}

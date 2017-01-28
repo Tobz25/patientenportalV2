@@ -19,5 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 })  
 public class Doctor extends UserGroup {
 	
-
+	@Override
+	public Role getRole() {
+		return Role.Doctor;
+	}
 }

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity(name="USERGROUP")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name="baseclass_id")
 public class UserGroup extends BaseClass {
 
@@ -41,12 +41,18 @@ public class UserGroup extends BaseClass {
 		this.user = user;
 	}
 	
+	@XmlTransient
 	public Set<Permission> getPermissions() {
 		return this.permissons;
 	}
 	
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissons = permissions;
+	}
+	
+	
+	public Role getRole(){
+		return Role.Other;
 	}
 
 }

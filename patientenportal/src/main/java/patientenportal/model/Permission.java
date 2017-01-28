@@ -14,6 +14,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -27,12 +31,14 @@ import javax.persistence.JoinColumn;;
 @PrimaryKeyJoinColumn(name="baseclass_id")
 public class Permission extends BaseClass {
 	
+	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "PERMISSION_ELEMENTS", 
 	       joinColumns = { @JoinColumn(name = "permission_id") }, 
 	       inverseJoinColumns = { @JoinColumn(name = "element_id") })
 	private Set<BaseClass> elements;
 	
+	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "PERMISSION_USER", 
 	       joinColumns = { @JoinColumn(name = "permission_id") }, 
@@ -69,6 +75,7 @@ public class Permission extends BaseClass {
 		this.permissionType = permissionType;
 	}
 	
+	@XmlTransient
 	public Set<UserGroup> getUserGroup() {
 		return this.usergroups;
 	}
@@ -87,6 +94,7 @@ public class Permission extends BaseClass {
 		usergroup.getPermissions().remove(this);
 	}
 	
+	@XmlTransient
 	public Set<BaseClass> getElements() {
 		return this.elements;
 	}

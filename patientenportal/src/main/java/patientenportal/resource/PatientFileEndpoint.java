@@ -14,9 +14,12 @@ import javax.ws.rs.core.UriInfo;
 
 import patientenportal.helper.MySecurityContext;
 import patientenportal.helper.Secured;
+import patientenportal.helper.UnauthorizedException;
 import patientenportal.model.CaseFile;
 import patientenportal.model.MedicalDocument;
 import patientenportal.model.PatientFile;
+import patientenportal.model.Role;
+import patientenportal.model.User;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
 import patientenportal.service.PermissionService;
@@ -31,9 +34,10 @@ public class PatientFileEndpoint {
 	
 	
 	@GET
+	@Secured({Role.Patient})
 	@Path("/")
 	public PatientFile getPatientFile(@PathParam("patientId") long patientId, @Context UriInfo uriInfo){
-		PatientFile patientFile = patientFileService.getPatientFileById(patientId);
+		PatientFile patientFile = patientFileService.getPatientFile(patientId);
 		
 		/*String uri = getUriForSelf(uriInfo, patientFile);
 		patientFile.addLink(uri, "self");*/
@@ -44,18 +48,13 @@ public class PatientFileEndpoint {
 	@Path("/{patientFileId}")
 	public PatientFile getPatientFileById(@PathParam("patientFileId") long patientFileId,
 										  @Context SecurityContext securityContext){
-		MySecurityContext context = (MySecurityContext) securityContext;
-		long userId = context.getUserId();
-		Permission hasPermission= permissionService.getPermission();
-		if(hasPermission == ""){
+		//MySecurityContext context = (MySecurityContext) securityContext;
+		User user = (User) securityContext.getUserPrincipal();
+		if (permissionService.checkReadPermission(user.getActiveUserRole().getId(), patientFileId)){
 			return patientFileService.getPatientFileById(patientFileId);
 		}
 		else{
-			Response unauthorizedStatus = Response
-					.status(Response.Status.UNAUTHORIZED)
-					.entity("Login failed. Username or password are incorrect.")
-					.build();
-            return unauthorizedStatus;
+			throw new UnauthorizedException("User does not have access to the requested ressource");
 		}
 
 	}
@@ -80,7 +79,7 @@ public class PatientFileEndpoint {
 								  @QueryParam("user") long userId,
 								  @QueryParam("permission") String permission){
 		PatientFile patientFile = patientFileService.getPatientFileById(patientFileId);
-		return permissionService.setPermission(patientFile, userId, permission);
+		return Response.ok().build();//permissionService.addPermission(patientFile, userId, permission);
 	}
 
 	@Path("/{patientFileId}/documents")

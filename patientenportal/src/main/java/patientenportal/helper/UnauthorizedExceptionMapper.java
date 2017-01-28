@@ -13,7 +13,7 @@ public class UnauthorizedExceptionMapper implements ExceptionMapper<Unauthorized
 
 	@Override
 	public Response toResponse(UnauthorizedException ex) {
-		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 404, "https://wiseb.wiwi.tu-dresden.de/wiki");
+		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 401, "https://wiseb.wiwi.tu-dresden.de/wiki");
 		return Response.status(Status.UNAUTHORIZED)
 				.entity(errorMessage)
 				.build();

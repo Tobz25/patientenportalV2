@@ -13,9 +13,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import patientenportal.helper.MySecurityContext;
 import patientenportal.helper.Secured;
+import patientenportal.helper.UnauthorizedException;
 import patientenportal.model.Treatment;
 import patientenportal.model.User;
+import patientenportal.service.PermissionService;
 import patientenportal.service.TreatmentService;
 
 @Secured
@@ -24,6 +27,7 @@ public class TreatmentEndpoint {
 	@Context
 	SecurityContext securityContext;
 	TreatmentService treatmentService = new TreatmentService();
+	PermissionService permissionService = new PermissionService();
 	
 	@GET
 	public Set<Treatment> getAllTreatments(@PathParam ("caseFileId") long caseFileId){
@@ -39,10 +43,12 @@ public class TreatmentEndpoint {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Treatment addTreatment(Treatment treatment){
-		if (checkWritePermission(securityContext.getUser(), treatment.getCaseFile()))
-			return treatmentService.addTreatment(treatment);
-		else return throw Exception();
+	public Treatment addTreatment(Treatment treatment, @Context SecurityContext securityContext){
+		MySecurityContext context = (MySecurityContext) securityContext;
+		return null;
+		//if (permissionService.checkWritePermission(context.getUserId(), treatment.getCaseFile().getId()))
+			//return treatmentService.addTreatment(treatment);
+		//else throw new UnauthorizedException("User has no permission to add a treatment");
 	}
 	
 	@PUT
