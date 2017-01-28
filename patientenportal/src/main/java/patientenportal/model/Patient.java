@@ -34,6 +34,8 @@ public class Patient extends UserGroup {
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Set<Permission> permissionsAuthorised;
 	
+	private String insuranceData;
+	
 	@ManyToMany
 	@JoinTable
 	private Set<Doctor> linkedDoctors;
@@ -46,6 +48,15 @@ public class Patient extends UserGroup {
 	@JoinTable
 	private Set<Relative> linkedRelatives;
 	
+	
+	/*
+	 * Getter & Setter
+	 */
+	
+	/*
+	 * Patientfile
+	 */
+	
 	@XmlTransient
 	public PatientFile getPatientFile() {
 		return this.patientFile;
@@ -55,7 +66,19 @@ public class Patient extends UserGroup {
 		this.patientFile = patientFile;
 	}
 	
+	/*
+	 * InsuranceData
+	 */
+
 	
+	public String getInsuranceData() {
+		return this.insuranceData;
+	}
+	
+	public void setInsuranceData(String insuranceData) {
+		this.insuranceData = insuranceData;
+	}
+ 	
 	/*
 	 * Permissions
 	 */

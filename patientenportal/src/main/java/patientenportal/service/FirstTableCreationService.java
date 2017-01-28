@@ -122,24 +122,24 @@ public class FirstTableCreationService {
 			drhouse.addUserRole(drhousedoctor);
 			drhouse.setActiveUserRole(drhousedoctor);
 			pmax.addLinkedDoctor(drhousedoctor);
+			pdao.updateEntity(pmax);
 			drdao.updateEntity(drhousedoctor);
 			
 			Doctor drfrankensteindoctor = drdao.addEntityAndReturn(new Doctor());
 			drfrankenstein.addUserRole(drfrankensteindoctor);
 			drfrankenstein.setActiveUserRole(drfrankensteindoctor);
 			pmia.addLinkedDoctor(drfrankensteindoctor);
-			pmia.addLinkedDoctor(drfrankensteindoctor);
-			
-
-			
+			pdao.updateEntity(pmia);
 			drdao.updateEntity(drfrankensteindoctor);
 			
 			//Oma erna ist Angehörige
 			Relative romaerna = rdao.addEntityAndReturn(new Relative());
 			omaerna.addUserRole(romaerna);
 			omaerna.setActiveUserRole(romaerna);
+			pmax.addLinkedRelative(romaerna);
 			
 			rdao.updateEntity(romaerna);
+			pdao.updateEntity(pmax);
 			
 			//Behandlungsfälle anlegen
 			CaseFile c1 = cdao.addEntityAndReturn(new CaseFile());
@@ -277,7 +277,9 @@ public class FirstTableCreationService {
 
 			pdao.updateEntity(pmax);
 			pfdao.updateEntity(pfmax);
-			cdao.updateEntity(c3);
+			cdao.updateEntity(c1);
+			cdao.updateEntity(c2);
+
 			tdao.updateEntity(tinsulin);
 			permdao.updateEntity(p3);
 			

@@ -24,22 +24,6 @@ public class PatientFile extends BaseClass{
 	@OneToOne
 	private Patient patient;
 	
-/*
-	
-	@XmlTransient
-	@OneToMany
-	private Set<Link> links;
-	
-	@XmlTransient
-	public Set<Link> getLinks() {
-		return links;
-	}
-
-	@XmlTransient
-	public void setLinks(Set<Link> links) {
-		this.links = links;
-	}*/
-
 	@OneToMany(mappedBy="patientFile", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Set<CaseFile> caseFiles;

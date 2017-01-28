@@ -27,6 +27,10 @@ import patientenportal.model.User;
 import patientenportal.model.UserGroup;
 import patientenportal.model.WebSession;
 
+/*
+ * PermissionService-Klasse verwaltet sämtliche Zugriffe auf Berechtigungen in der Anwendung.
+ */
+
 public class PermissionService {
 	
 	private boolean checkReadPermission(UserGroup loggedInUser, BaseClass entity){
@@ -34,6 +38,7 @@ public class PermissionService {
 		
 		return pdao.checkReadPermission(loggedInUser, entity);
 	}
+	
 	private  boolean checkWritePermission(UserGroup loggedInUser, BaseClass entity) {
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
 		

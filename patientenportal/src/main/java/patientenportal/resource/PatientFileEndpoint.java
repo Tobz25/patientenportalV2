@@ -17,18 +17,23 @@ import patientenportal.helper.Secured;
 import patientenportal.helper.UnauthorizedException;
 import patientenportal.model.CaseFile;
 import patientenportal.model.MedicalDocument;
+import patientenportal.model.Patient;
 import patientenportal.model.PatientFile;
+import patientenportal.model.PermissionType;
 import patientenportal.model.Role;
 import patientenportal.model.User;
+import patientenportal.model.UserGroup;
 import patientenportal.service.PatientFileService;
 import patientenportal.service.PatientService;
 import patientenportal.service.PermissionService;
+import patientenportal.service.UserGroupService;
 
 @Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class PatientFileEndpoint {
 	PatientFileService patientFileService = new PatientFileService();
 	PermissionService permissionService = new PermissionService();
+	UserGroupService usergroupService = new UserGroupService();
 	
 	
 	@GET
@@ -67,11 +72,13 @@ public class PatientFileEndpoint {
 	@Path("/{patientFileId}/setPermission")
 	@Secured({Role.Patient})
 	public Response setPermission(@PathParam("patientFileId") long patientFileId,
-								  @QueryParam("user") long userId,
-								  @QueryParam("permission") String permission){
+								  @QueryParam("user") long userGroupId,
+								  @QueryParam("permission") PermissionType permission,
+								  @Context SecurityContext securityContext){
+		User user = (User) securityContext.getUserPrincipal();
+		UserGroup uGroup = usergroupService.getUserGroupById(userGroupId);
 		PatientFile patientFile = patientFileService.getPatientFileById(patientFileId);
-		
-		return Response.ok().build();//permissionService.addPermission(patientFile, userId, permission);
+		return permissionService.addPermission(patientFile, (Patient)user.getActiveUserRole(), uGroup, permission);
 	}
 
 	@Path("/{patientFileId}/documents")

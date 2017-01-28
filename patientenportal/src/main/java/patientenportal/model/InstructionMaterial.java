@@ -35,6 +35,11 @@ public class InstructionMaterial extends BaseClass{
 	@Column
 	private String description;
 	
+	/*
+	 * Getter & Setter
+	 */
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		return true;//(obj == this) || (obj instanceof InstructionMaterial) && Id != null && Id.equals(((InstructionMaterial) obj).getId());

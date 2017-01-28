@@ -15,6 +15,10 @@ public class PatientDAOImpl extends GenericDAOImpl<Patient, Long>{
 		Patient newPatient = new Patient();
         
         newPatient.setUser(entity.getUser());
+        newPatient.setInsuranceData(entity.getInsuranceData());
+        newPatient.setLinkedDoctors(entity.getLinkedDoctors());
+        newPatient.setLinkedMedicalStaff(entity.getLinkedMedicalStaff());
+        newPatient.setLinkedRelatives(entity.getLinkedRelatives());
         return newPatient; 
 	}
 

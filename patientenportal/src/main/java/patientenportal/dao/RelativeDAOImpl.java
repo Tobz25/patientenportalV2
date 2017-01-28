@@ -16,6 +16,7 @@ public class RelativeDAOImpl extends GenericDAOImpl<Relative, Long>{
 		Relative newRelative = new Relative();
         
         newRelative.setUser(entity.getUser());
+        newRelative.setLinkedToPatients(entity.getLinkedToPatients());
         return newRelative; 
 	}
 
