@@ -105,7 +105,7 @@ public class Patient extends UserGroup {
 	/*
 	 * linkedDoctors
 	 */
-	
+	@XmlTransient
 	public Set<Doctor> getLinkedDoctors() {
 		return this.linkedDoctors;
 	}
@@ -127,7 +127,7 @@ public class Patient extends UserGroup {
 	/*
 	 * linkedMedicalStaff
 	 */
-	
+	@XmlTransient
 	public Set<MedicalStaff> getLinkedMedicalStaff() {
 		return this.linkedMedicalStaff;
 	}
@@ -149,7 +149,7 @@ public class Patient extends UserGroup {
 	/*
 	 * linkedRelatives
 	 */
-	
+	@XmlTransient
 	public Set<Relative> getLinkedRelatives() {
 		return this.linkedRelatives;
 	}
