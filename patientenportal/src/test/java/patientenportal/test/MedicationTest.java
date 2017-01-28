@@ -15,30 +15,28 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import patientenportal.model.MedicationPrescription;
-import patientenportal.model.User;
+import patientenportal.model.Medication;
 import patientenportal.resource.AuthenticationEndpoint;
-import patientenportal.resource.MedicationPrescriptionEndpoint;
+import patientenportal.resource.MedicationEndpoint;
 
-public class MedicationPrescriptionTest extends JerseyTest{
-	
+public class MedicationTest extends JerseyTest{
 	private String token;
 	private long patientID;
 	private long caseFileID;
-	private long treatmentID=22;
-	private long medicationPrescriptionID=24;
+	private long treatmentID;
+	private long medicationID;
 	
 	@Override
 	protected Application configure() {
-	    return new ResourceConfig(AuthenticationEndpoint.class, MedicationPrescriptionEndpoint.class);
+	    return new ResourceConfig(AuthenticationEndpoint.class, MedicationEndpoint.class);
 	}
-	
+
 	@Before
 	public void doBefore(){
 	//login 
 		Form form = new Form();
 		form.param("username", "haku");
-		form.param("password", "haku");		
+		form.param("password", "haku");
 		Response response = target("authentication/login")
 					.request()
 					.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
@@ -46,31 +44,30 @@ public class MedicationPrescriptionTest extends JerseyTest{
 		System.out.println("Test erg:" + response.toString());
 		System.out.println("Token: " + token + " - " + token.length());
         assertNotNull(response);
-        assertTrue(token.length() == 26);
+        assertTrue(token.length() == 26); 		
 	}
-
+	
 	@Test
-	public void testGetMedicationPrescription() {
-		Response response = target("patients/"+patientID+"/patientFile/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medcationPrescription/"+medicationPrescriptionID)
+	public void testGetMedication() {
+		Response response = target("/patients/"+patientID+"/patientFile/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medicationPrescription/medication/"+medicationID)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
-		MedicationPrescription temp = response.readEntity(MedicationPrescription.class);
-		assertTrue(temp.getId()==medicationPrescriptionID);
-		System.out.println("Medication Prescription: "+temp.toString());
-		
-		
-		fail("Not yet implemented");
+		Medication temp = response.readEntity(Medication.class);
+		assertTrue(temp.getId()==medicationID);
+		System.out.println("Medication: "+temp.toString());
 	}
 	
 	@After
 	public void tearDown(){
 	//logout
-		Response logoutResponse = target("authentication/logout")
-				.request()
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-				.get();
-		System.out.println(logoutResponse.toString());
+	Response logoutResponse = target("authentication/logout")
+			.request()
+			.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+			.get();
+	System.out.println(logoutResponse.toString());
 	}
+
+	
 
 }

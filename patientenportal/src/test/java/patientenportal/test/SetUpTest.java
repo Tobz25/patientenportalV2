@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -41,7 +42,7 @@ public class SetUpTest extends JerseyTest {
 	
 	@Before
 	public void doBefore(){
-		//create new User and store UserId
+		/*//create new User and store UserId
         User user = new User();
         user.setUsername("haku");
         user.setPassword("haku");
@@ -64,16 +65,22 @@ public class SetUpTest extends JerseyTest {
         							.request()
         							.post(Entity.entity(user, MediaType.APPLICATION_FORM_URLENCODED));
         testPatient=responsePatient.readEntity(Patient.class);        
-        /* add caseFile to PatientFile
+         add caseFile to PatientFile
          * testPatientFile=testPatient.getPatientFile();
         Set caseFiles = new HashSet();
 	    caseFiles.add(new CaseFile());
-	    testPatientFile.setCaseFiles(caseFiles);*/
+	    testPatientFile.setCaseFiles(caseFiles);
         patientId=testPatient.getId();
         System.out.println("new Patient: "+testPatient.toString());
-        
+        */
 
-
+		//call Test Set-up on HibernateEndpoint
+		Response response = target("/hibernate/testdaten")
+				.request()
+				.get();
+		System.out.println(response.toString());
+		
+		
 	}
 
 	@After

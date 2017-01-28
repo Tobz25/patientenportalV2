@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,10 @@ import patientenportal.resource.CaseFileEndpoint;
 
 public class CaseFileTest extends JerseyTest{
 
-private String token;
+	private String token;
+	long patientId = 9;
+	long patientFileId = 10;
+	long caseFileId = 17;
 	
 	@Override
 	protected Application configure() {
@@ -35,10 +39,10 @@ private String token;
 	@Before
 	public void doBefore() {
 		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");
+		form.param("username", "max");
+		form.param("password", "max");
 		
-		Response response = target("authentication").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
+		Response response = target("authentication/login").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
         token = response.readEntity(String.class);
 		System.out.println("Test erg:" + response.toString());
 		System.out.println("Token: " + token + " - " + token.length());
@@ -50,14 +54,25 @@ private String token;
 	
 	@Test
 	public void testGetCaseFile() {
-		Response response = target("patients/0/patientFile/0/caseFiles/0")
+		//test get: "Tumor im Hirn"
+		Response response = target("/patients/"+patientId+"/patientFile/"+patientFileId+"/caseFiles/"+caseFileId)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
 		CaseFile file = response.readEntity(CaseFile.class);
 		String answer = file.toString();
 		System.out.println("Antwort: " + answer);
-		assertTrue(file.getId()==0);
+		assertTrue(file.getId()==caseFileId);
+	}
+	
+	@After
+	public void tearDown(){
+		//logout
+				Response logoutResponse = target("authentication/logout")
+						.request()
+						.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+						.get();
+				System.out.println(logoutResponse.toString());
 	}
 
 }

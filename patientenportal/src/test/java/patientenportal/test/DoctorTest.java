@@ -21,7 +21,7 @@ import patientenportal.resource.DoctorEndpoint;
 
 public class DoctorTest extends JerseyTest{
 	
-	private long testId;
+	private long testId=13;
 	private String token;
 	
 	@Override
@@ -32,10 +32,12 @@ public class DoctorTest extends JerseyTest{
 	@Before
 	public void doBefore(){
 		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");
+		form.param("username", "pcox");
+		form.param("password", "flachzange");
 		
-		Response response = target("authentication").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
+		Response response = target("authentication/login")
+							.request()
+							.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
         token = response.readEntity(String.class);
 		System.out.println("Test erg:" + response.toString());
 		System.out.println("Token: " + token + " - " + token.length());
@@ -53,6 +55,11 @@ public class DoctorTest extends JerseyTest{
 	@After
 	public void doAfter(){
 		//clean up
+		Response logoutResponse = target("authentication/logout")
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		System.out.println(logoutResponse.toString());
 	}
 
 }
