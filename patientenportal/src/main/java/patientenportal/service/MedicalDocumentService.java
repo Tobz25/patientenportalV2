@@ -36,15 +36,4 @@ public class MedicalDocumentService {
 		MedicalDocument newMedicalDocument = mdi.addEntityAndReturn(MedicalDocument);
 		return newMedicalDocument;
 	}
-	
-	public MedicalDocument deleteMedicalDocumentById(long MedicalDocumentId) {
-		MedicalDocumentDAOImpl mdi = new MedicalDocumentDAOImpl();
-		List<MedicalDocument> allMedicalDocument = mdi.getAll();
-		for (MedicalDocument md : allMedicalDocument){
-			if (md.getId() == MedicalDocumentId){
-				mdi.deleteEntity(md);	
-			}
-		}
-		throw new DataNotFoundException("No Medical Document found for id " + MedicalDocumentId);
-	}
 }

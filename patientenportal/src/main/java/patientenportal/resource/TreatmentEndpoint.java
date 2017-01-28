@@ -16,6 +16,8 @@ import javax.ws.rs.core.SecurityContext;
 import patientenportal.helper.MySecurityContext;
 import patientenportal.helper.Secured;
 import patientenportal.helper.UnauthorizedException;
+import patientenportal.model.CaseFile;
+import patientenportal.model.Role;
 import patientenportal.model.Treatment;
 import patientenportal.model.User;
 import patientenportal.service.PermissionService;
@@ -24,31 +26,60 @@ import patientenportal.service.TreatmentService;
 @Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class TreatmentEndpoint {
-	@Context
-	SecurityContext securityContext;
 	TreatmentService treatmentService = new TreatmentService();
 	PermissionService permissionService = new PermissionService();
 	
+	
 	@GET
-	public Set<Treatment> getAllTreatments(@PathParam ("caseFileId") long caseFileId){
-		return treatmentService.getTreatments(caseFileId);
+	@Path("/")
+	public Set<Treatment> getAllTreatments(@PathParam ("caseFileId") long caseFileId, @Context SecurityContext securityContext){
+		User user = (User) securityContext.getUserPrincipal();
+		Set<Treatment> treatments = treatmentService.getTreatments(caseFileId);;
+		for(Treatment tm: treatments) {
+			if (!permissionService.checkReadPermission(user.getActiveUserRole().getId(), tm.getId())) {
+				throw new UnauthorizedException("User does not have access to the requested ressource");
+			}
+		}
+		return treatments;
 	}
 	
 	@GET
 	@Path("/{treatmentId}")
-	public Treatment getTreatment(@PathParam("treatmentId") long treatmentId){
-		return treatmentService.getTreatmentById(treatmentId);
+	public Treatment getTreatment(@PathParam("treatmentId") long treatmentId, @Context SecurityContext securityContext){
+		User user = (User) securityContext.getUserPrincipal();		
+		if (permissionService.checkReadPermission(user.getActiveUserRole().getId(), treatmentId)){
+			return  treatmentService.getTreatmentById(treatmentId);
+		}
+		else{
+			throw new UnauthorizedException("User does not have access to the requested ressource");
+		}
 	}
 	
 	
 	@POST
+	@Path("/")
+	@Secured({Role.Doctor})
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Treatment addTreatment(Treatment treatment, @Context SecurityContext securityContext){
-		MySecurityContext context = (MySecurityContext) securityContext;
+	public Treatment addTreatment(Treatment treatment, @PathParam("caseFileId") long caseFileId, @Context SecurityContext securityContext){
+		User user = (User) securityContext.getUserPrincipal();
+		if(permissionService.checkWritePermission(user.getActiveUserRole().getId(), caseFileId)){
+			return treatmentService.addTreatment(treatment);
+		}
+			
 		return null;
-		//if (permissionService.checkWritePermission(context.getUserId(), treatment.getCaseFile().getId()))
-			//return treatmentService.addTreatment(treatment);
-		//else throw new UnauthorizedException("User has no permission to add a treatment");
+	}
+	
+	@PUT
+	@Path("/")
+	@Secured({Role.Doctor})
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Treatment updateTreatment(Treatment treatment, @PathParam("caseFileId") long caseFileId, @Context SecurityContext securityContext){
+		User user = (User) securityContext.getUserPrincipal();
+		if(permissionService.checkWritePermission(user.getActiveUserRole().getId(), caseFileId)){
+			return treatmentService.updateTreatment(treatment);
+		}
+			
+		return null;
 	}
 	
 	@PUT
@@ -62,5 +93,4 @@ public class TreatmentEndpoint {
 	public MedicationPrescriptionEndpoint getMedicationPrescription(){
 		return new MedicationPrescriptionEndpoint();
 	}
-
 }

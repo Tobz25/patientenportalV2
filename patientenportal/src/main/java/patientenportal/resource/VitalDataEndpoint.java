@@ -16,13 +16,12 @@ import javax.ws.rs.core.SecurityContext;
 import patientenportal.helper.Secured;
 import patientenportal.model.User;
 import patientenportal.model.VitalDate;
+import patientenportal.service.GenericDeleteService;
 import patientenportal.service.VitalDataService;
 
 @Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class VitalDataEndpoint {
-	@Context
-	SecurityContext securityContext;
 	VitalDataService VitalDataService = new VitalDataService();
 	
 	@GET
@@ -45,6 +44,6 @@ public class VitalDataEndpoint {
 	@DELETE
 	@Path("/{VitalDataId}")
 	public void deleteVitalDateById(@PathParam("VitalDataId") long VitalDataId){
-		VitalDataService.deleteVitalDate(VitalDataId);		
+		GenericDeleteService.genericDelete(VitalDataId);		
 	}
 }

@@ -59,20 +59,18 @@ public class CaseFileEndpoint {
 	
 	@POST
 	@Path("/")
-	@Secured({Role.Patient})
+	@Secured({Role.Doctor})
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CaseFile createCaseFile(CaseFile caseFile){
+	public CaseFile createCaseFile(CaseFile caseFile, @PathParam("patientFileId") long patientFileId){
 		return CaseFileService.createCaseFile(caseFile);
 	}
 	
-	@Path("/{CaseFileId}/treatments")
+	@Path("/{caseFileId}/treatments")
 	public TreatmentEndpoint getTreatmentsEndpoint(){
 		return new TreatmentEndpoint();
 	}
 	
-	
-	@Secured({Role.Patient})
-	@Path("/{CaseFileId}/vitalData")
+	@Path("/{caseFileId}/vitalData")
 	public VitalDataEndpoint getVitalData(){
 		return new VitalDataEndpoint();
 	}

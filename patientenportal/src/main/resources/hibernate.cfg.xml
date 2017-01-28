@@ -52,6 +52,10 @@
       	<mapping class="patientenportal.model.MedicalDocument"/>
       	<mapping class="patientenportal.model.InstructionMaterial"/>
       	<mapping class="patientenportal.model.Permission"/>
+      	<mapping class="patientenportal.model.Administrator"/>
+      	<mapping class="patientenportal.model.MedicalStaff"/>
+      	
+      	
       	
       	
       	

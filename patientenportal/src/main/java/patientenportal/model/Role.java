@@ -5,5 +5,6 @@ public enum Role {
     Doctor,
     Relative,
     MedicalStaff,
+    Admin,
     Other
 }
