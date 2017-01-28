@@ -15,6 +15,7 @@ import javax.ws.rs.core.SecurityContext;
 import patientenportal.helper.Secured;
 import patientenportal.model.MedicalDocument;
 import patientenportal.model.VitalDate;
+import patientenportal.service.GenericDeleteService;
 import patientenportal.service.MedicalDocumentService;
 
 
@@ -42,7 +43,7 @@ public class MedicalDocumentEndpoint {
 	}
 	
 	@DELETE
-	public MedicalDocument deleteMedicalDocumentById(@PathParam("MedicalDocumentId") long MedicalDocumentId){
-		return MedicalDocumentService.deleteMedicalDocumentById(MedicalDocumentId);
+	public void deleteMedicalDocumentById(@PathParam("MedicalDocumentId") long MedicalDocumentId){
+		GenericDeleteService.genericDelete(MedicalDocumentId);
 	}
 }

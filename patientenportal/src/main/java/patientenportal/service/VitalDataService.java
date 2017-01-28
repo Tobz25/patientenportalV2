@@ -35,14 +35,4 @@ public class VitalDataService {
 		VitalDate newVitalDate = vdi.addEntityAndReturn(VitalDate);
 		return newVitalDate;
 	}
-	
-	public void deleteVitalDate(long VitalDataId) {
-		VitalDateDAOImpl vdi = new VitalDateDAOImpl();
-		List<VitalDate> allVitalDate = vdi.getAll();
-		for (VitalDate vt : allVitalDate){
-			if (vt.getId() == VitalDataId){
-				vdi.deleteEntity(vt);	
-			}
-		}
-	}
 }
