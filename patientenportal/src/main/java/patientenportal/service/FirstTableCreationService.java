@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import patientenportal.dao.AdministratorDAOImpl;
 import patientenportal.dao.CaseFileDAOImpl;
 import patientenportal.dao.DoctorDAOImpl;
 import patientenportal.dao.MedicationDAOImpl;
@@ -19,6 +20,7 @@ import patientenportal.dao.TreatmentDAOImpl;
 import patientenportal.dao.UserDAOImpl;
 import patientenportal.dao.WebSessionDAOImpl;
 import patientenportal.helper.DataNotFoundException;
+import patientenportal.model.Administrator;
 import patientenportal.model.CaseFile;
 import patientenportal.model.Doctor;
 import patientenportal.model.Medication;
@@ -49,6 +51,7 @@ public class FirstTableCreationService {
 		try 
 		{
 			UserDAOImpl userdao = new UserDAOImpl();
+			AdministratorDAOImpl adao = new AdministratorDAOImpl();
 			PatientDAOImpl  pdao = new PatientDAOImpl();
 			PatientFileDAOImpl pfdao = new PatientFileDAOImpl();
 			CaseFileDAOImpl cdao = new CaseFileDAOImpl();
@@ -68,6 +71,23 @@ public class FirstTableCreationService {
 			User drhouse = userdao.addEntityAndReturn(newUser("Gregory", "House", "Herr Dr", "g.house@test.de", "ghouse", "123456789"));
 			User drfrankenstein = userdao.addEntityAndReturn(newUser("Michael", "Frankenstein", "Herr Dr", "m@frankenstein.de", "mfrankenstein", "password"));
 			User omaerna = userdao.addEntityAndReturn(newUser("Erna", "Müller", "Frau Oma", "erna@oma.de", "omaerna", "meinpassword"));
+			
+			//Administrator anlegen
+			Administrator adminadmin = adao.addEntityAndReturn(new Administrator());
+			adminadmin.setUser(admin);
+			admin.addUserRole(adminadmin);
+			admin.setActiveUserRole(adminadmin);
+			adao.updateEntity(adminadmin);
+			userdao.updateEntity(admin);
+			
+			//haku
+			Administrator hakuadmin = adao.addEntityAndReturn(new Administrator());
+			hakuadmin.setUser(haku);
+			haku.addUserRole(hakuadmin);
+			haku.setActiveUserRole(hakuadmin);
+			adao.updateEntity(hakuadmin);
+			userdao.updateEntity(haku);
+			
 			
 			//Patienten anlegen
 			Patient pmax = pdao.addEntityAndReturn(new Patient());
@@ -95,16 +115,23 @@ public class FirstTableCreationService {
 			Doctor drcoxdoctor = drdao.addEntityAndReturn(new Doctor()); 
 			drcox.addUserRole(drcoxdoctor);
 			drcox.setActiveUserRole(drcoxdoctor);
+			pmia.addLinkedDoctor(drcoxdoctor);
 			drdao.updateEntity(drcoxdoctor);
 			
 			Doctor drhousedoctor = drdao.addEntityAndReturn(new Doctor());
 			drhouse.addUserRole(drhousedoctor);
 			drhouse.setActiveUserRole(drhousedoctor);
+			pmax.addLinkedDoctor(drhousedoctor);
 			drdao.updateEntity(drhousedoctor);
 			
 			Doctor drfrankensteindoctor = drdao.addEntityAndReturn(new Doctor());
 			drfrankenstein.addUserRole(drfrankensteindoctor);
 			drfrankenstein.setActiveUserRole(drfrankensteindoctor);
+			pmia.addLinkedDoctor(drfrankensteindoctor);
+			pmia.addLinkedDoctor(drfrankensteindoctor);
+			
+
+			
 			drdao.updateEntity(drfrankensteindoctor);
 			
 			//Oma erna ist Angehörige
