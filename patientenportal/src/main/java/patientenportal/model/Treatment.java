@@ -59,7 +59,7 @@ public class Treatment extends BaseClass{
 		return this.caseFile;
 	}
 
-	public void setCaseFile(CaseFile CaseFile) {
+	public void setCaseFile(CaseFile caseFile) {
 		this.caseFile = caseFile;
 	}
 

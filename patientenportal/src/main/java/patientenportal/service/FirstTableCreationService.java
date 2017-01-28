@@ -119,6 +119,7 @@ public class FirstTableCreationService {
 			c1.setDiagnose("Tumor im Hirn");
 			cdao.updateEntity(c1);
 			pfmax.addCaseFile(c1);
+			pfdao.updateEntity(pfmax);
 			
 			CaseFile c2 = cdao.addEntityAndReturn(new CaseFile());
 			c2.setDiagnose("Diabetis");
@@ -133,32 +134,36 @@ public class FirstTableCreationService {
 			pfdao.updateEntity(pfmia);
 			
 			//Behandlungen anlegen
-			Treatment tkeuchhusten = tdao.addEntityAndReturn(new Treatment());
-			tkeuchhusten.setDescription("Hormonschlucktherapie");
-			tkeuchhusten.setDoctor(drcoxdoctor);
-			tdao.updateEntity(tkeuchhusten);
-			
-			c3.addTreatment(tkeuchhusten);
-			cdao.updateEntity(c3);
-			
+				//Treatment zu c1
 			Treatment tstrahlung = tdao.addEntityAndReturn(new Treatment());
 			tstrahlung.setDescription("Chemotherapie");
 			tstrahlung.setDoctor(drhousedoctor);
-			tdao.updateEntity(tstrahlung);
-			
+			tstrahlung.setCaseFile(c1);
 			c1.addTreatment(tstrahlung);
-			cdao.updateEntity(c1);
 			
+			tdao.updateEntity(tstrahlung);
+			cdao.updateEntity(c1);
+				//Treatment zu c2
 			Treatment tinsulin = tdao.addEntityAndReturn(new Treatment());
 			tinsulin.setDescription("Insulinbehandlung");
 			tinsulin.setDoctor(drhousedoctor);
 			Calendar caltins = Calendar.getInstance();
 			caltins.add(Calendar.DATE, -12);
 			tinsulin.setStartDateTime(caltins.getTime());
+			tinsulin.setCaseFile(c2);
 			c2.addTreatment(tinsulin);
 			
 			tdao.updateEntity(tinsulin);
 			cdao.updateEntity(c2);
+				//Treatment  zu c3
+			Treatment tkeuchhusten = tdao.addEntityAndReturn(new Treatment());
+			tkeuchhusten.setDescription("Hormonschlucktherapie");
+			tkeuchhusten.setDoctor(drcoxdoctor);
+			tkeuchhusten.setCaseFile(c3);
+			c3.addTreatment(tkeuchhusten);
+			tdao.updateEntity(tkeuchhusten);
+			cdao.updateEntity(c3);
+			
 			
 			//Medikamentenverschreibung Insulin
 				//Medikation
@@ -223,6 +228,27 @@ public class FirstTableCreationService {
 			tdao.updateEntity(tinsulin);
 			permdao.updateEntity(p2);
 
+				//für drhouse
+			
+			Permission p3 = permdao.addEntityAndReturn(new Permission());
+			p3.setPermissionType(PermissionType.WRITE);
+			p3.addUserGroup(drhousedoctor);
+			p3.addElements(pmax);
+			p3.addElements(pfmax);
+			p3.addElements(c1);	//Tumor --> Chemo
+			p3.addElements(c2); //Diabetis --> 
+			p3.addElements(tstrahlung);
+			
+			p2.addElements(tinsulin);
+
+			pdao.updateEntity(pmax);
+			pfdao.updateEntity(pfmax);
+			cdao.updateEntity(c3);
+			tdao.updateEntity(tinsulin);
+			permdao.updateEntity(p2);
+			
+			
+			
 			
 			
 			userdao.updateEntity(maxmustermann);
