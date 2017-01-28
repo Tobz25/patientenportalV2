@@ -17,6 +17,7 @@ public class DoctorDAOImpl extends GenericDAOImpl<Doctor, Long>{
 		Doctor newDoctor = new Doctor();
         
         newDoctor.setUser(entity.getUser());
+        newDoctor.setLinkedToPatients(entity.getLinkedToPatients());
         return newDoctor; 
 	}
 
