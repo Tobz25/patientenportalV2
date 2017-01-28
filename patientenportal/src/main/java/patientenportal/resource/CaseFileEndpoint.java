@@ -3,6 +3,7 @@ package patientenportal.resource;
 import java.util.List;
 import java.util.Set;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -59,8 +60,9 @@ public class CaseFileEndpoint {
 	@POST
 	@Path("/")
 	@Secured({Role.Patient})
-	public CaseFile createCaseFile(){
-		
+	@Consumes(MediaType.APPLICATION_JSON)
+	public CaseFile createCaseFile(CaseFile caseFile){
+		return CaseFileService.createCaseFile(caseFile);
 	}
 	
 	@Path("/{CaseFileId}/treatments")
