@@ -21,10 +21,10 @@ import patientenportal.resource.MedicationEndpoint;
 
 public class MedicationTest extends JerseyTest{
 	private String token;
-	private long patientID;
-	private long caseFileID;
-	private long treatmentID;
-	private long medicationID;
+	private long patientID=11;
+	private long caseFileID=20;
+	private long treatmentID=23;
+	private long medicationID=25;
 	
 	@Override
 	protected Application configure() {
@@ -49,7 +49,7 @@ public class MedicationTest extends JerseyTest{
 	
 	@Test
 	public void testGetMedication() {
-		Response response = target("/patients/"+patientID+"/patientFile/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medicationPrescription/medication/"+medicationID)
+		Response response = target("/patients/"+patientID+"/patientFile/12/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medicationPrescription/medication/"+medicationID)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();

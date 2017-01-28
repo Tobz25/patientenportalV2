@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +23,8 @@ import patientenportal.resource.PatientFileEndpoint;
 public class PatientFileTest extends JerseyTest{
 	
 	private String token="";
-	private long patientID=9;
-	private long patientFileID=10;
+	private long patientID=11;
+	private long patientFileID=12;
 	
 	@Override
 	protected Application configure(){
@@ -42,14 +43,25 @@ public class PatientFileTest extends JerseyTest{
 
 	@Test
 	public void testGetPatientFile() {
-		Response response = target("/patients/"+patientID+"/patientFile")
+		Response response = target("/patients/"+patientID+"/patientFile/"+patientFileID)
 								.request()
 								.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 								.get();
 		PatientFile file = response.readEntity(PatientFile.class);
+		System.out.println("Serverantwort: "+response.toString());
 		assertTrue(file.getId()==patientFileID);
 		String answer = file.toString();
 		System.out.println("Antwort: " + answer);
+	}
+	
+	@After
+	public void tearDown(){
+		//logout
+		Response logoutResponse = target("authentication/logout")
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		System.out.println(logoutResponse.toString());
 	}
 
 }

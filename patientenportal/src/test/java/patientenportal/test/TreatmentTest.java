@@ -22,9 +22,10 @@ import patientenportal.resource.TreatmentEndpoint;
 
 public class TreatmentTest extends JerseyTest{
 	
-	private TreatmentService treatmentService;
-	private Treatment treatment;
-	private long ID;
+	private long treatmentID=22;
+	private long patientID=11;
+	private long patientFileID=12;
+	private long caseFileID=19;
 	private String token;
 	
 	@Override
@@ -34,41 +35,43 @@ public class TreatmentTest extends JerseyTest{
 
 	@Before
 	public void doBefore(){
-		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");
-		
-		Response response = target("authentication").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
-        token = response.readEntity(String.class);
-		System.out.println("Test erg:" + response.toString());
-		System.out.println("Token: " + token + " - " + token.length());
-        
-        treatmentService = new TreatmentService();
-        treatment = treatmentService.addTreatment(new Treatment());
-        //ID = treatment.getId();
-        ID=0;
-        System.out.println(""+ID);
+		//login 
+				Form form = new Form();
+				form.param("username", "max");
+				form.param("password", "max");
+				
+				Response response = target("authentication/login")
+						.request()
+						.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
+		        token = response.readEntity(String.class);
+				System.out.println("Test erg:" + response.toString());
+				System.out.println("Token: " + token + " - " + token.length());
+		        assertNotNull(response);
+		        assertTrue(token.length() == 26); 
 	}
 	
-	@After
-	public void tearDown() throws Exception {
-	}
-	
-	@Test 
-	public void testPostTreatment(){
-		Treatment treatmentTemp;
-		treatmentService = new TreatmentService();
-        treatment = treatmentService.addTreatment(treatmentTemp = new Treatment());
-        assertTrue(treatment == treatmentTemp);
-	}
 
 	@Test
 	public void testGetTreatment() {
-		Response response = target("patients/1/patientFile/caseFiles/1/treatments/"+ID)
+		String pfad = "/patients/"+patientID+"/patientFile/"+patientFileID+"/caseFiles/"+caseFileID+"/treatments/"+treatmentID;
+		System.out.println("Pfad: "+pfad);
+		Response response = target(pfad)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
-		assertTrue(treatment==response.getEntity());
+		Treatment treatment = response.readEntity(Treatment.class);
+		System.out.println("Serverantwort: "+response.toString());
+		assertTrue(treatment.getId()==treatmentID);
+	}
+	
+	@After
+	public void tearDown(){
+		//logout
+				Response logoutResponse = target("authentication/logout")
+						.request()
+						.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+						.get();
+				System.out.println(logoutResponse.toString());
 	}
 
 }

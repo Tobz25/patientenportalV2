@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 public class PatientTest extends JerseyTest{
 	
 	String token;
-	private long patientId=9;
+	private long patientId=11;
 
 	@Override
 	protected Application configure(){
