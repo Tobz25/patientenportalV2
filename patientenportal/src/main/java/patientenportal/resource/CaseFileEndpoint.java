@@ -70,7 +70,6 @@ public class CaseFileEndpoint {
 		return new TreatmentEndpoint();
 	}
 	
-	
 	@Path("/{caseFileId}/vitalData")
 	public VitalDataEndpoint getVitalData(){
 		return new VitalDataEndpoint();

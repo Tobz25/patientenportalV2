@@ -31,6 +31,7 @@ public class UserService {
 		throw new DataNotFoundException("User with id " + userId + " not found");
 	}	
 	
+	@Secured({Role.Administrator})
 	public User addUser(User user){
 		UserDAOImpl udi = new UserDAOImpl();
 		User createdUser = udi.addEntityAndReturn(user);
