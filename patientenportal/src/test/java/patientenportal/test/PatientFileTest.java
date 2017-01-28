@@ -21,7 +21,9 @@ import patientenportal.resource.PatientFileEndpoint;
 
 public class PatientFileTest extends JerseyTest{
 	
-	private String rightToken="";
+	private String token="";
+	private long patientID=9;
+	private long patientFileID=10;
 	
 	@Override
 	protected Application configure(){
@@ -31,24 +33,23 @@ public class PatientFileTest extends JerseyTest{
 	@Before
 	public void doBefore(){
 		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");			
-		Response response = target("authentication").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
-	    rightToken = response.readEntity(String.class);
-	    System.out.println("Used Token: "+ rightToken);
+		form.param("username", "max");
+		form.param("password", "max");			
+		Response response = target("authentication/login").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
+	    token = response.readEntity(String.class);
+	    System.out.println("Used Token: "+ token);
 	}
 
 	@Test
-	public void test() {
-		Response response = target("/patients/0/patientFile/0")
+	public void testGetPatientFile() {
+		Response response = target("/patients/"+patientID+"/patientFile")
 								.request()
-								.header(HttpHeaders.AUTHORIZATION, "Bearer " + rightToken)
+								.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 								.get();
 		PatientFile file = response.readEntity(PatientFile.class);
+		assertTrue(file.getId()==patientFileID);
 		String answer = file.toString();
 		System.out.println("Antwort: " + answer);
-		
-		
 	}
 
 }

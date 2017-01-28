@@ -23,8 +23,9 @@ import patientenportal.resource.MedicationPrescriptionEndpoint;
 public class MedicationPrescriptionTest extends JerseyTest{
 	
 	private String token;
-	private long patientID;
-	private long caseFileID;
+	private long patientID=11;
+	private long patientFileID=12;
+	private long caseFileID=19;
 	private long treatmentID=22;
 	private long medicationPrescriptionID=24;
 	
@@ -37,8 +38,8 @@ public class MedicationPrescriptionTest extends JerseyTest{
 	public void doBefore(){
 	//login 
 		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");		
+		form.param("username", "mia");
+		form.param("password", "mia");		
 		Response response = target("authentication/login")
 					.request()
 					.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
@@ -51,16 +52,13 @@ public class MedicationPrescriptionTest extends JerseyTest{
 
 	@Test
 	public void testGetMedicationPrescription() {
-		Response response = target("patients/"+patientID+"/patientFile/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medcationPrescription/"+medicationPrescriptionID)
+		Response response = target("/patients/"+patientID+"/patientFile/"+patientFileID+"/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medcationPrescription/"+medicationPrescriptionID)
 				.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
 		MedicationPrescription temp = response.readEntity(MedicationPrescription.class);
 		assertTrue(temp.getId()==medicationPrescriptionID);
 		System.out.println("Medication Prescription: "+temp.toString());
-		
-		
-		fail("Not yet implemented");
 	}
 	
 	@After

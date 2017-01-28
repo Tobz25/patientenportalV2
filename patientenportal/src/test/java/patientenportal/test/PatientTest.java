@@ -20,8 +20,8 @@ import javax.ws.rs.core.Response;
 
 public class PatientTest extends JerseyTest{
 	
-	String rightToken = "";
-	private long testId=5;
+	String token;
+	private long patientId=9;
 
 	@Override
 	protected Application configure(){
@@ -32,24 +32,24 @@ public class PatientTest extends JerseyTest{
 	public void doBefore(){
 	//anmelden
 		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");
-		Response response = target("authentication").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
-	    rightToken = response.readEntity(String.class);
-	    System.out.println("Used Token: "+ rightToken);
+		form.param("username", "max");
+		form.param("password", "max");
+		Response response = target("authentication/login").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
+	    token = response.readEntity(String.class);
+	    System.out.println("Used Token: "+ token);
 	}
 	
 	@Test
 	public void  testGetPatient() {
-		Response response = target("patients/"+testId)
+		Response response = target("patients/"+patientId)
 				.request()
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + rightToken)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
 		
 		Patient patient = response.readEntity(Patient.class); 
 		String answer = patient.getUser().toString();
 		System.out.println("User "+ answer);
-		assertTrue(patient.getId()==testId);
+		assertTrue(patient.getId()==patientId);
 	}
 	
 }
