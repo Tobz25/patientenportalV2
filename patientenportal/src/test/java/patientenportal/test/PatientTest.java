@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 public class PatientTest extends JerseyTest{
 	
 	String rightToken = "";
-	private long testId=0;
+	private long testId=5;
 
 	@Override
 	protected Application configure(){
@@ -33,7 +33,7 @@ public class PatientTest extends JerseyTest{
 	//anmelden
 		Form form = new Form();
 		form.param("username", "haku");
-		form.param("password", "haku");			
+		form.param("password", "haku");
 		Response response = target("authentication").request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
 	    rightToken = response.readEntity(String.class);
 	    System.out.println("Used Token: "+ rightToken);
