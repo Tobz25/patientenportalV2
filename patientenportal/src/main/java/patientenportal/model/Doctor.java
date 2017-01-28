@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
@@ -29,7 +30,7 @@ public class Doctor extends UserGroup {
 	 * Getter & Setter
 	 * 
 	 */
-
+	@XmlTransient
 	public Set<Patient> getLinkedToPatients() {
 		return this.linkedToPatient;
 	}
