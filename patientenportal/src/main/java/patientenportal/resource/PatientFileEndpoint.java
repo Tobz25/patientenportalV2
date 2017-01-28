@@ -62,18 +62,10 @@ public class PatientFileEndpoint {
 	public CaseFileEndpoint getCaseFileEndpoint(){
 		return new CaseFileEndpoint();
 	}
-	 /*
-	private String getUriForSelf(UriInfo uriInfo, PatientFile patientFile){
-		String uri = uriInfo.getBaseUriBuilder()
-				.path(PatientFile.class)
-				.path(Long.toString(patientFile.getId()))
-				.build()
-				.toString();
-		return uri;
-	}*/
 	
 	@POST
 	@Path("/{patientFileId}/setPermission")
+	@Secured({Role.Patient})
 	public Response setPermission(@PathParam("patientFileId") long patientFileId,
 								  @QueryParam("user") long userId,
 								  @QueryParam("permission") String permission){

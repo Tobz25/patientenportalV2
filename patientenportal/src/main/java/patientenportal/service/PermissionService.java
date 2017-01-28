@@ -29,12 +29,12 @@ import patientenportal.model.WebSession;
 
 public class PermissionService {
 	
-	public boolean checkReadPermission(UserGroup loggedInUser, BaseClass entity){
+	private boolean checkReadPermission(UserGroup loggedInUser, BaseClass entity){
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
 		
 		return pdao.checkReadPermission(loggedInUser, entity);
 	}
-	public boolean checkWritePermission(UserGroup loggedInUser, BaseClass entity) {
+	private  boolean checkWritePermission(UserGroup loggedInUser, BaseClass entity) {
 		PermissionDAOImpl pdao = new PermissionDAOImpl();
 		
 		return pdao.checkWritePermission(loggedInUser, entity);
@@ -54,6 +54,21 @@ public class PermissionService {
 		if (classes == null) return false; //throw new Exception(hat den baseclass nicht gefunden);
 		
 		return checkReadPermission(group, classes);
+	}
+	
+	public boolean checkWritePermission(long usergroupID, long classId) {
+		UserGroupDAOImpl udao = new UserGroupDAOImpl();
+		//List<UserGroup> users = udao.findByCriteria(Restrictions.eq("baseclass_id", usergroupID));
+		UserGroup group = udao.findById(usergroupID);
+		
+		if (group == null) return false;//throw new Exception(hat den nutzer nicht gefunden);
+		
+		BaseClassDAOImpl bdao = new BaseClassDAOImpl();
+		
+		BaseClass classes = bdao.findById(classId);
+		if (classes == null) return false; //throw new Exception(hat den baseclass nicht gefunden);
+		
+		return checkWritePermission(group, classes);
 	}
 	
 	public Response addPermission(BaseClass entity, Patient patient, UserGroup userGroup, PermissionType type) {

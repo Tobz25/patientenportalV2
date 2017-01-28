@@ -21,8 +21,6 @@ import patientenportal.service.VitalDataService;
 @Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class VitalDataEndpoint {
-	@Context
-	SecurityContext securityContext;
 	VitalDataService VitalDataService = new VitalDataService();
 	
 	@GET
