@@ -20,7 +20,6 @@ import patientenportal.service.SessionService;
 @Path("/authentication")
 public class AuthenticationEndpoint {
 	
-	
 	AuthenticationService authService;
 	
 	SessionService sessionService;
