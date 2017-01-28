@@ -5,11 +5,14 @@ import java.util.List;
 import patientenportal.dao.PatientDAOImpl;
 import patientenportal.dao.UserDAOImpl;
 import patientenportal.helper.DataNotFoundException;
+import patientenportal.helper.Secured;
 import patientenportal.model.Patient;
+import patientenportal.model.Role;
 import patientenportal.model.User;
 
 public class UserService {
 	
+	@Secured({Role.Admin})
 	public List<User> getAllUser(){
 		UserDAOImpl udi = new UserDAOImpl();
 		List<User> user = udi.getAll();
@@ -31,7 +34,7 @@ public class UserService {
 		throw new DataNotFoundException("User with id " + userId + " not found");
 	}	
 	
-	@Secured({Role.Administrator})
+	@Secured({Role.Admin})
 	public User addUser(User user){
 		UserDAOImpl udi = new UserDAOImpl();
 		User createdUser = udi.addEntityAndReturn(user);

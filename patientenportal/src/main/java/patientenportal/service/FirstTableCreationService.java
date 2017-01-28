@@ -232,13 +232,21 @@ public class FirstTableCreationService {
 			p1.addElements(pfmax);
 			p1.addElements(c1);
 			p1.addElements(c2);
+			p1.addElements(insulin);
+			p1.addElements(tinsulin);
+			p1.addElements(min);
+			p1.addElements(mp);
 			p1.addElements(tstrahlung);
 
 			pdao.updateEntity(pmax);
 			pfdao.updateEntity(pfmax);
 			cdao.updateEntity(c1);
 			cdao.updateEntity(c2);
+			mdao.updateEntity(insulin);
 			tdao.updateEntity(tstrahlung);
+			tdao.updateEntity(tinsulin);
+			mindao.updateEntity(min);
+			mpdao.updateEntity(mp);
 			permdao.updateEntity(p1);
 			
 				//für Nutzer Mia
@@ -265,14 +273,13 @@ public class FirstTableCreationService {
 			p3.addElements(c1);	//Tumor --> Chemo
 			p3.addElements(c2); //Diabetis --> 
 			p3.addElements(tstrahlung);
-			
-			p2.addElements(tinsulin);
+			p3.addElements(tinsulin);
 
 			pdao.updateEntity(pmax);
 			pfdao.updateEntity(pfmax);
 			cdao.updateEntity(c3);
 			tdao.updateEntity(tinsulin);
-			permdao.updateEntity(p2);
+			permdao.updateEntity(p3);
 			
 			
 			
