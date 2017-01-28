@@ -27,8 +27,6 @@ import patientenportal.service.PermissionService;
 @Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class PatientFileEndpoint {
-	@Context
-	MySecurityContext securityContext;
 	PatientFileService patientFileService = new PatientFileService();
 	PermissionService permissionService = new PermissionService();
 	
@@ -36,19 +34,21 @@ public class PatientFileEndpoint {
 	@GET
 	@Secured({Role.Patient})
 	@Path("/")
-	public PatientFile getPatientFile(@PathParam("patientId") long patientId, @Context UriInfo uriInfo){
+	public PatientFile getPatientFile(@PathParam("patientId") long patientId, @Context SecurityContext securityContext){
+		User user = (User) securityContext.getUserPrincipal();
 		PatientFile patientFile = patientFileService.getPatientFile(patientId);
-		
-		/*String uri = getUriForSelf(uriInfo, patientFile);
-		patientFile.addLink(uri, "self");*/
-		return patientFile;
+		if (permissionService.checkReadPermission(user.getActiveUserRole().getId(), patientFile.getId())){
+			return patientFile;
+		}
+		else{
+			throw new UnauthorizedException("User does not have access to the requested ressource");
+		}
 	}
 	
 	@GET
 	@Path("/{patientFileId}")
 	public PatientFile getPatientFileById(@PathParam("patientFileId") long patientFileId,
 										  @Context SecurityContext securityContext){
-		//MySecurityContext context = (MySecurityContext) securityContext;
 		User user = (User) securityContext.getUserPrincipal();
 		if (permissionService.checkReadPermission(user.getActiveUserRole().getId(), patientFileId)){
 			return patientFileService.getPatientFileById(patientFileId);
@@ -56,7 +56,6 @@ public class PatientFileEndpoint {
 		else{
 			throw new UnauthorizedException("User does not have access to the requested ressource");
 		}
-
 	}
 	
 	@Path("/{patientFileId}/caseFiles")
@@ -79,6 +78,7 @@ public class PatientFileEndpoint {
 								  @QueryParam("user") long userId,
 								  @QueryParam("permission") String permission){
 		PatientFile patientFile = patientFileService.getPatientFileById(patientFileId);
+		
 		return Response.ok().build();//permissionService.addPermission(patientFile, userId, permission);
 	}
 
