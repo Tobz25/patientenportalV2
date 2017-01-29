@@ -1,4 +1,7 @@
 package patientenportal.resource;
+/*
+ * Service-Schnittstelle, um einem Patienten Angehörige hinzuzufügen und die hinzugefügten Angehörigen auszugeben
+ */
 
 import java.util.Set;
 

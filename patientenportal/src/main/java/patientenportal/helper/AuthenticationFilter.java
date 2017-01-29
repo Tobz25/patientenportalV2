@@ -1,4 +1,9 @@
 package patientenportal.helper;
+/*
+ * Der Authentication Filter stellt die erste Stufe der Webservice-Sicherheit dar. Es wird geprüft, ob der anfragende Client einen
+ * gültigen Session Token enthält, also ob aktuell eine Session für ihn besteht. Über den Token kann der anfragende User vom System
+ * identifiziert werden.
+ */
 
 import java.io.IOException;
 import java.security.Principal;

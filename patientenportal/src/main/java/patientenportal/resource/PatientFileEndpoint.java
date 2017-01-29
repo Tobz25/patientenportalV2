@@ -1,5 +1,7 @@
 package patientenportal.resource;
-
+/*
+ * Service-Schnittstelle für alle Operationen, die eine Patientenakte betreffen
+ */
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

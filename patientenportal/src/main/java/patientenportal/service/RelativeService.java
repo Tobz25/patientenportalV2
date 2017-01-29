@@ -1,5 +1,10 @@
 package patientenportal.service;
 
+/*
+ * Service-Implementierung /Anwendungslogik, welche alle Methoden, die Angehörige betreffen, enthält
+ * 
+ */
+
 import java.util.List;
 
 import patientenportal.dao.DoctorDAOImpl;

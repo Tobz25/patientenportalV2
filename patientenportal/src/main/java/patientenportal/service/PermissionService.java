@@ -1,4 +1,9 @@
 package patientenportal.service;
+/*
+ * Service-Implementierung /Anwendungslogik für das Prüfen, ob ein Client die notwendigen Lese-oder Schreibrechte besitzt, um einen
+ * Service aufzurufen.
+ * 
+ */
 
 import java.util.List;
 

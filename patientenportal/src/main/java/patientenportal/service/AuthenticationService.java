@@ -1,4 +1,8 @@
 package patientenportal.service;
+/*
+ * Service-Implementierung /Anwendungslogik, welche Login, Logout sowie die Authentifizierung über Tokens enthält
+ * 
+ */
 
 import java.util.List;
 

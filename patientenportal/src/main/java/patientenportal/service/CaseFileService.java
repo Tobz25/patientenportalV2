@@ -1,5 +1,9 @@
 package patientenportal.service;
 
+/*
+ * Service-Implementierung /Anwendungslogik, welche alle Methoden, die Fallaten betreffen, enthält
+ * 
+ */
 import java.util.List;
 import java.util.Set;
 

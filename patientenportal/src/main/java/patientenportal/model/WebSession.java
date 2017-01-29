@@ -15,7 +15,11 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-
+/*
+ * Eine WebSession wird erzeugt, wenn sich ein User mit gültigem username und password anmeldet. Sie enthält die User, einen Zeitstempel
+ * und einen Token, der an den User zurückgegeben wird.
+ * 
+ */
 
 @XmlRootElement
 @Entity(name="websession")

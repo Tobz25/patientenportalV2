@@ -1,5 +1,7 @@
 package patientenportal.service;
-
+/*
+ *Service-Klasse, die eine generische Methode zum Löschen von Entitäten enthält  
+ */
 import java.util.List;
 
 import patientenportal.dao.BaseClassDAOImpl;

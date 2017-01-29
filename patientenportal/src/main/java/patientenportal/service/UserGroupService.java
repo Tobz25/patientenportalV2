@@ -1,4 +1,8 @@
 package patientenportal.service;
+/*
+ * Service-Implementierung /Anwendungslogik, zur Ermittlung eines UserGroup Objektes
+ * 
+ */
 
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class UserGroupService {
 	public UserGroup getUserGroupById(long userGroupId){
 		UserGroupDAOImpl ddi = new UserGroupDAOImpl();
 		UserGroup groups = ddi.findById(userGroupId);
-		if (groups == null)	throw new DataNotFoundException("Doctor with id " + userGroupId + " not found");
+		if (groups == null)	throw new DataNotFoundException("User group not found");
 		return groups;
 	}	
 

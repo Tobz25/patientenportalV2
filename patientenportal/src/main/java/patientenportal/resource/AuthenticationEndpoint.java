@@ -1,4 +1,8 @@
 package patientenportal.resource;
+/*
+ * Service-Schnittstelle, über die sich Benutzer an- und abmelden können.
+ * 
+ */
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;

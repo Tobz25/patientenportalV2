@@ -1,4 +1,7 @@
 package patientenportal.resource;
+/*
+ * Service-Schnittstelle für alle Operationen, die eine Fallakte betreffen
+ */
 
 import java.util.List;
 import java.util.Set;

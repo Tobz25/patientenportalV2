@@ -1,5 +1,10 @@
 package patientenportal.service;
 
+/*
+ * Service-Implementierung /Anwendungslogik, welche alle Methoden, die Patientenakte betreffen, enthält
+ * 
+ */
+
 import java.util.List;
 
 import org.hibernate.criterion.Restrictions;

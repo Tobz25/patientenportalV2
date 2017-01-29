@@ -1,4 +1,8 @@
 package patientenportal.helper;
+/*
+ * Allgemeine Exception, die mit einer spezifischen Fehlermeldung aufgrufen werden kann
+ * 
+ */
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;

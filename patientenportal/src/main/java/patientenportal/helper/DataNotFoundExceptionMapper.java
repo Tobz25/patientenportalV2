@@ -10,9 +10,6 @@ import javax.ws.rs.ext.Provider;
 
 import patientenportal.model.ErrorMessage;
 
-/*
- * Takes in an exception and returns a response to the client
- */
 @Provider
 public class DataNotFoundExceptionMapper implements ExceptionMapper<DataNotFoundException>{
 

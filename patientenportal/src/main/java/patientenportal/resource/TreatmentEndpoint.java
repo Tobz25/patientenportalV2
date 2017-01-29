@@ -1,4 +1,7 @@
 package patientenportal.resource;
+/*
+ * Service-Schnittstelle für alle Operationen, die eine Behandlung betreffen
+ */
 
 import java.util.Set;
 

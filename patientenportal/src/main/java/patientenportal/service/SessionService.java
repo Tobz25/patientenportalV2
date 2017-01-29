@@ -1,5 +1,10 @@
 package patientenportal.service;
 
+/*
+ * Service-Implementierung /Anwendungslogik, welche alle Methoden, zur Verwaltung einer Session enthält
+ * 
+ */
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Calendar;

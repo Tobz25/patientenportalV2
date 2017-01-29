@@ -1,5 +1,9 @@
 package patientenportal.helper;
-
+/*
+ * Über den Security Context können bei jedem aufruf einer Service-Schnitstelle spezifische Informationen über den anfragenden
+ * Client (z.B: User-ID und Rolle) ermittelt werden.
+ * 
+ */
 import java.security.Principal;
 
 import javax.ws.rs.core.SecurityContext;

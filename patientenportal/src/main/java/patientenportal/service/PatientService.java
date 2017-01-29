@@ -1,4 +1,8 @@
 package patientenportal.service;
+/*
+ * Service-Implementierung /Anwendungslogik, welche alle Methoden, die einen Patienten betreffen, enthält
+ * 
+ */
 
 import java.util.List;
 

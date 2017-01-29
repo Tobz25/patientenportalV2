@@ -1,4 +1,9 @@
 package patientenportal.helper;
+/*
+ * Der Authorization-Filter stellt die 2. Stufe der Webservice-Sicherheit dar. Es wird geprüft, ob der anfragende Client die erfolderliche
+ * Rolle zum Aufruf einer Service-Schnittstellt bestitzt. 
+ * 
+ */
 
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
@@ -36,8 +41,6 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         Class<?> resourceClass = resourceInfo.getResourceClass();
         List<Role> classRoles = extractRoles(resourceClass);
 
-        // Get the resource method which matches with the requested URL
-        // Extract the roles declared by it
         Method resourceMethod = resourceInfo.getResourceMethod();
         List<Role> methodRoles = extractRoles(resourceMethod);
         User user = (User) requestContext.getSecurityContext().getUserPrincipal();
@@ -83,6 +86,8 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         }
     }
 
+    // Check if the user contains one of the allowed roles
+    // Throw an Exception if the user has not permission to execute the method
     private boolean checkPermissions(List<Role> allowedRoles, User user){
     	Role userRole = user.getActiveUserRole().getRole();
     	
@@ -92,7 +97,5 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     	else if(allowedRoles.contains(userRole))
     		return true;
     	else return false;
-        // Check if the user contains one of the allowed roles
-        // Throw an Exception if the user has not permission to execute the method
     }
 }

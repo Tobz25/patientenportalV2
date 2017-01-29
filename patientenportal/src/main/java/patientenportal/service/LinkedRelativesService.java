@@ -1,5 +1,10 @@
 package patientenportal.service;
 
+/*
+ * Service-Implementierung /Anwendungslogik, um Patienten Angehörige hinzuzufügen und diese auszugeben
+ * 
+ */
+
 import java.util.List;
 import java.util.Set;
 

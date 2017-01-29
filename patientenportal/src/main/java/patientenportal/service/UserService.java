@@ -1,4 +1,8 @@
 package patientenportal.service;
+/*
+ * Alle Services, die mit der Basis-Userklasse zusammenhängen
+ * 
+ */
 
 import java.util.List;
 
@@ -43,7 +47,6 @@ public class UserService {
 		return createdUser;
 	}
 	
-	//TODO: ID mitgeben. Bisher wird immer ein neuer User angelegt!
 		public User updateUser(User user){
 			UserDAOImpl udi = new UserDAOImpl();
 			udi.updateEntity(user);
@@ -70,10 +73,7 @@ public class UserService {
 			}
 		}
 		
-		public void deleteUser(long userId){
-			
-			//TODO:Rollen (also Patient, Angehöriger, Arzt, löschen wenn zu diesem User existierend
-			
+		public void deleteUser(long userId){			
 			UserDAOImpl udi = new UserDAOImpl();
 			List<User> allUser = udi.getAll();
 			User user;
@@ -84,8 +84,7 @@ public class UserService {
 			}
 		}
 		
-		private Role getRole(String r){
-			
+		private Role getRole(String r){		
 			switch(r){
 				case "Patient": r.equals("Patient");
 				return Role.Patient;
