@@ -2,9 +2,13 @@ package patientenportal.service;
 
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
+
 import patientenportal.dao.PatientDAOImpl;
+import patientenportal.dao.RelativeDAOImpl;
 import patientenportal.helper.DataNotFoundException;
 import patientenportal.model.Patient;
+import patientenportal.model.Relative;
 
 public class PatientService {
 	
@@ -27,6 +31,6 @@ public class PatientService {
 			}
 		}
 		throw new DataNotFoundException("Patient with id " + patientId + " not found");
-	}	
-	
+	}
+
 }
