@@ -54,8 +54,18 @@ public class PatientFileTest extends JerseyTest{
 		System.out.println("Antwort: " + answer);
 	}
 	
+	@Test
+	public void testFalse() {
+		Response response = target("/patients/"+patientID+1+"/patientFile/"+patientFileID)
+								.request()
+								.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+								.get();
+		PatientFile file = response.readEntity(PatientFile.class);
+		assertNull(file);
+	}
+	
 	@After
-	public void tearDown(){
+	public void tearDownChild(){
 		//logout
 		Response logoutResponse = target("authentication/logout")
 				.request()

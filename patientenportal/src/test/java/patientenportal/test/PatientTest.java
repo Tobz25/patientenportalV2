@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,6 +51,27 @@ public class PatientTest extends JerseyTest{
 		String answer = patient.getUser().toString();
 		System.out.println("User "+ answer);
 		assertTrue(patient.getId()==patientId);
+	}
+	
+	@Test
+	public void  testFalse() {
+		Response response = target("patients/"+patientId+1)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		
+		Patient patient = response.readEntity(Patient.class); 
+		assertNull(patient);
+	}
+	
+	@After
+	public void tearDown(){
+		//logout
+		Response logoutResponse = target("authentication/logout")
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		System.out.println(logoutResponse.toString());
 	}
 	
 }

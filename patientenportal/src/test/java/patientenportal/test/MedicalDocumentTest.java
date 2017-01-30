@@ -15,11 +15,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import patientenportal.model.Doctor;
+import patientenportal.model.MedicalDocument;
 import patientenportal.resource.AuthenticationEndpoint;
 import patientenportal.resource.MedicalDocumentEndpoint;
 
 public class MedicalDocumentTest extends JerseyTest{
 	private String token;
+	private long patientID=11;
+	private long patientFileID=12;
+	private long documentsID=37;
 	
 	
 	@Override
@@ -31,8 +36,8 @@ public class MedicalDocumentTest extends JerseyTest{
 	public void doBefore(){
 	//login 
 		Form form = new Form();
-		form.param("username", "haku");
-		form.param("password", "haku");
+		form.param("username", "max");
+		form.param("password", "max");
 		Response response = target("authentication/login")
 						.request()
 						.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
@@ -45,17 +50,33 @@ public class MedicalDocumentTest extends JerseyTest{
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDownChild() throws Exception {
+		//logout
+		Response logoutResponse = target("authentication/logout")
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		System.out.println(logoutResponse.toString());
 	}
 
 	@Test
-	public void test() {
-	//logout
-			Response logoutResponse = target("authentication/logout")
-					.request()
-					.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-					.get();
-			System.out.println(logoutResponse.toString());
+	public void testGetDocument() {
+		Response response = target("/patients/"+patientID+"/patientFile/"+patientFileID+"/documents/"+documentsID)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		assertTrue(response.readEntity(MedicalDocument.class).getId()==documentsID);
+	
+	}
+	
+	@Test
+	public void testFalse() {
+		Response response = target("/patients/"+patientID+1+"/patientFile/"+patientFileID+"/documents/"+documentsID)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		MedicalDocument temp = response.readEntity(MedicalDocument.class);
+		assertNull(temp);
 	}
 
 }

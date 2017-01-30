@@ -22,9 +22,9 @@ import patientenportal.resource.CaseFileEndpoint;
 public class CaseFileTest extends JerseyTest{
 
 	private String token;
-	long patientId = 9;
-	long patientFileId = 10;
-	long caseFileId = 17;
+	long patientId = 11;
+	long patientFileId = 12;
+	long caseFileId = 19;
 	
 	@Override
 	protected Application configure() {
@@ -37,7 +37,7 @@ public class CaseFileTest extends JerseyTest{
 	 */
 	
 	@Before
-	public void doBefore() {
+	public void setUpChild() {
 		Form form = new Form();
 		form.param("username", "max");
 		form.param("password", "max");
@@ -66,8 +66,20 @@ public class CaseFileTest extends JerseyTest{
 		assertTrue(file.getId()==caseFileId);
 	}
 	
+	@Test
+	public void testFalse() {
+		//test get: "Tumor im Hirn"
+		Response response = target("/patients/"+1+"/patientFile/"+2+"/caseFiles/"+3)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		CaseFile file = response.readEntity(CaseFile.class);
+		assertNull(file);
+	}
+
+	
 	@After
-	public void tearDown(){
+	public void tearDownChild(){
 		//logout
 				Response logoutResponse = target("authentication/logout")
 						.request()

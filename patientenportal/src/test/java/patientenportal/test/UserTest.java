@@ -50,7 +50,6 @@ public class UserTest extends JerseyTest {
 		System.out.println("Test erg:" + response.toString());
 		System.out.println("Token: " + token + " - " + token.length());
         assertNotNull(response);
-        assertTrue(token.length() == 26); 
 	}
 	
 	
@@ -67,8 +66,19 @@ public class UserTest extends JerseyTest {
 		
 	}
 	
+	@Test
+	public void testFalse(){
+		Response response = target("users/"+userId+1)
+								.request()
+								.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+								.get();
+		User temp = response.readEntity(User.class);
+		assertNull(temp);
+		
+	}
+	
 	@After
-	public void tearDown(){
+	public void tearDownChild(){
 		//logout
 		Response logoutResponse = target("authentication/logout")
 				.request()

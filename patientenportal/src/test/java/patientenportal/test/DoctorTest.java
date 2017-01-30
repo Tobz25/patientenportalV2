@@ -21,7 +21,7 @@ import patientenportal.resource.DoctorEndpoint;
 
 public class DoctorTest extends JerseyTest{
 	
-	private long testId=13;
+	private long testId=15;
 	private String token;
 	
 	@Override
@@ -50,6 +50,15 @@ public class DoctorTest extends JerseyTest{
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 				.get();
 		assertTrue(response.readEntity(Doctor.class).getId()==testId);
+	}
+	
+	@Test
+	public void testFalse() {
+		Response response = target("/doctors/"+testId+1)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		assertNull(response.readEntity(Doctor.class));
 	}
 	
 	@After

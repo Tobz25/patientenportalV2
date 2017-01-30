@@ -58,6 +58,16 @@ public class MedicationTest extends JerseyTest{
 		System.out.println("Medication: "+temp.toString());
 	}
 	
+	@Test
+	public void testFalse() {
+		Response response = target("/patients/"+patientID+1+"/patientFile/12/caseFiles/"+caseFileID+"/treatments/"+treatmentID+"/medicationPrescription/medication/"+medicationID)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		Medication temp = response.readEntity(Medication.class);
+		assertNull(temp);
+	}
+	
 	@After
 	public void tearDown(){
 	//logout

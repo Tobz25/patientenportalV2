@@ -14,10 +14,11 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import patientenportal.service.TreatmentService;
-import patientenportal.MyResource;
 import patientenportal.model.Treatment;
 import patientenportal.resource.AuthenticationEndpoint;
+import patientenportal.resource.CaseFileEndpoint;
+import patientenportal.resource.PatientEndpoint;
+import patientenportal.resource.PatientFileEndpoint;
 import patientenportal.resource.TreatmentEndpoint;
 
 public class TreatmentTest extends JerseyTest{
@@ -30,7 +31,7 @@ public class TreatmentTest extends JerseyTest{
 	
 	@Override
 	protected Application configure() {
-	    return new ResourceConfig(AuthenticationEndpoint.class, TreatmentEndpoint.class);
+	    return new ResourceConfig(AuthenticationEndpoint.class, TreatmentEndpoint.class, PatientEndpoint.class, PatientFileEndpoint.class, CaseFileEndpoint.class);
 	}
 
 	@Before
@@ -62,6 +63,18 @@ public class TreatmentTest extends JerseyTest{
 		Treatment treatment = response.readEntity(Treatment.class);
 		System.out.println("Serverantwort: "+response.toString());
 		assertTrue(treatment.getId()==treatmentID);
+	}
+	
+	@Test
+	public void testFalse() {
+		String pfad = "/patients/"+patientID+1+"/patientFile/"+patientFileID+"/caseFiles/"+caseFileID+"/treatments/"+treatmentID;
+		System.out.println("Pfad: "+pfad);
+		Response response = target(pfad)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		Treatment treatment = response.readEntity(Treatment.class);
+		assertNull(treatment);
 	}
 	
 	@After

@@ -48,7 +48,12 @@ public class VitalDataTest extends JerseyTest{
 
 	@After
 	public void tearDown() throws Exception {
-		
+		//logout
+				Response logoutResponse = target("authentication/logout")
+						.request()
+						.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+						.get();
+				System.out.println(logoutResponse.toString());
 	}
 
 	@Test
@@ -62,6 +67,17 @@ public class VitalDataTest extends JerseyTest{
 		long answer = date.getId();
 		System.out.println("Vitaldate: "+ answer);
 		assertTrue(answer==vitalDateId);
+	}
+	
+	@Test
+	public void testFalse() {
+		Response response = target("patients/"+patientId+1+"/patientFile/caseFiles/"+caseFileId+"/vitalData/"+vitalDateId)
+				.request()
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+				.get();
+		
+		VitalDate date = response.readEntity(VitalDate.class); 
+		assertNull(date);
 	}
 
 }
