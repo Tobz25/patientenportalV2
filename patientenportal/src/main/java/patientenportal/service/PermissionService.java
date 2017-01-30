@@ -24,6 +24,7 @@ import patientenportal.dao.UserDAOImpl;
 import patientenportal.dao.UserGroupDAOImpl;
 import patientenportal.dao.WebSessionDAOImpl;
 import patientenportal.helper.DataNotFoundException;
+import patientenportal.helper.GenericException;
 import patientenportal.model.BaseClass;
 import patientenportal.model.Patient;
 import patientenportal.model.Permission;
@@ -82,13 +83,18 @@ public class PermissionService {
 	}
 	
 	public Response addPermission(BaseClass entity, Patient patient, UserGroup userGroup, PermissionType type) {
-		PermissionDAOImpl pdao = new PermissionDAOImpl();
-		Permission p = new Permission();
-		p.setPatient(patient);
-		p.addElements(entity);
-		p.addUserGroup(userGroup);
-		pdao.addEntity(p);
-		return Response.status(Status.OK).build();
+		try{
+			PermissionDAOImpl pdao = new PermissionDAOImpl();
+			Permission p = new Permission();
+			p.setPatient(patient);
+			p.addElements(entity);
+			p.addUserGroup(userGroup);
+			pdao.addEntity(p);
+			return Response.status(Status.OK).build();
+		}
+		catch(Exception e){
+			throw new GenericException("Could not assign the permission");
+		}
 	}
 
 }
